@@ -19,6 +19,7 @@ export interface Booking {
   stayId: string
   stayTitle: string
   stayBrand?: string
+  userId?: string // For linking to user
   stay?: Stay
   guestInfo: {
     firstName: string

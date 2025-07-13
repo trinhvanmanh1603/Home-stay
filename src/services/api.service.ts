@@ -39,4 +39,4 @@ export class ApiService {
 
 // Export configured instances
 export const mainApiService = new ApiService('http://localhost:3001')
-export const authApiService = new ApiService('http://localhost:3002')
+export const authApiService = new ApiService('http://localhost:3001')

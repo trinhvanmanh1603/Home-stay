@@ -149,7 +149,7 @@
                         @click="cancelBooking(booking)"
                         class="text-red-600 hover:text-red-700 text-sm font-medium"
                       >
-                        Hủy đặt phòng
+                        {{ booking.cancellationRequest?.status === 'pending' ? 'Đang chờ xử lý hủy' : 'Hủy đặt phòng' }}
                       </button>
                       <button
                         v-else-if="booking.remainingAmount && booking.remainingAmount > 0 && booking.paymentStatus !== 'fully_paid'"
@@ -171,6 +171,66 @@
                       {{ booking.cancellationReason }}
                     </p>
                   </div>
+
+                  <!-- Cancellation Request Status -->
+                  <div v-if="booking.cancellationRequest" 
+                       class="mt-3 p-3 rounded-lg border"
+                       :class="{
+                         'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800': booking.cancellationRequest.status === 'pending',
+                         'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800': booking.cancellationRequest.status === 'approved',
+                         'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800': booking.cancellationRequest.status === 'rejected'
+                       }">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="text-sm font-medium"
+                           :class="{
+                             'text-yellow-800 dark:text-yellow-400': booking.cancellationRequest.status === 'pending',
+                             'text-green-800 dark:text-green-400': booking.cancellationRequest.status === 'approved',
+                             'text-red-800 dark:text-red-400': booking.cancellationRequest.status === 'rejected'
+                           }">
+                          {{ booking.cancellationRequest.status === 'pending' ? 'Yêu cầu hủy đang chờ xử lý' :
+                             booking.cancellationRequest.status === 'approved' ? 'Yêu cầu hủy đã được chấp nhận' :
+                             'Yêu cầu hủy bị từ chối' }}
+                        </p>
+                        <p class="text-xs"
+                           :class="{
+                             'text-yellow-600 dark:text-yellow-300': booking.cancellationRequest.status === 'pending',
+                             'text-green-600 dark:text-green-300': booking.cancellationRequest.status === 'approved',
+                             'text-red-600 dark:text-red-300': booking.cancellationRequest.status === 'rejected'
+                           }">
+                          Gửi lúc: {{ formatDate(booking.cancellationRequest.requestedAt) }}
+                        </p>
+                      </div>
+                      <div class="text-right">
+                        <p class="text-sm font-medium"
+                           :class="{
+                             'text-yellow-800 dark:text-yellow-400': booking.cancellationRequest.status === 'pending',
+                             'text-green-800 dark:text-green-400': booking.cancellationRequest.status === 'approved',
+                             'text-red-800 dark:text-red-400': booking.cancellationRequest.status === 'rejected'
+                           }">
+                          {{ formatCurrency(booking.cancellationRequest.refundAmount) }}
+                        </p>
+                        <p class="text-xs"
+                           :class="{
+                             'text-yellow-600 dark:text-yellow-300': booking.cancellationRequest.status === 'pending',
+                             'text-green-600 dark:text-green-300': booking.cancellationRequest.status === 'approved',
+                             'text-red-600 dark:text-red-300': booking.cancellationRequest.status === 'rejected'
+                           }">
+                          Số tiền hoàn
+                        </p>
+                      </div>
+                    </div>
+                    <div class="mt-2">
+                      <p class="text-sm"
+                         :class="{
+                           'text-yellow-700 dark:text-yellow-300': booking.cancellationRequest.status === 'pending',
+                           'text-green-700 dark:text-green-300': booking.cancellationRequest.status === 'approved',
+                           'text-red-700 dark:text-red-300': booking.cancellationRequest.status === 'rejected'
+                         }">
+                        <span class="font-medium">Lý do:</span> {{ booking.cancellationRequest.reason }}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -178,6 +238,71 @@
         </div>
       </div>
     </div>
+
+    <!-- Cancellation Confirmation Modal -->
+    <ConfirmationModal
+      :isOpen="showCancelModal"
+      type="warning"
+      title="Xác nhận hủy đặt phòng"
+      :message="`Bạn có chắc chắn muốn hủy đặt phòng #${selectedBooking?.id} tại ${selectedBooking?.stayTitle}?`"
+      details="Sau khi hủy, bạn có thể được hoàn lại một phần tiền đặt cọc tùy theo chính sách của homestay."
+      confirmText="Hủy đặt phòng"
+      cancelText="Không hủy"
+      @confirm="confirmCancelBooking"
+      @cancel="closeCancelModal"
+    />
+
+    <!-- Cancellation Reason Modal -->
+    <div v-if="showReasonModal" class="fixed inset-0 z-50 overflow-y-auto">
+      <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity" @click="closeReasonModal"></div>
+      <div class="flex min-h-full items-center justify-center p-4">
+        <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full mx-auto">
+          <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+              Lý do hủy đặt phòng
+            </h3>
+          </div>
+          <div class="px-6 py-4">
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+              Vui lòng cho biết lý do hủy đặt phòng để chúng tôi có thể cải thiện dịch vụ:
+            </p>
+            <textarea
+              v-model="cancellationReason"
+              placeholder="Nhập lý do hủy đặt phòng..."
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+          <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 rounded-b-lg flex justify-end space-x-3">
+            <button
+              @click="closeReasonModal"
+              class="px-4 py-2 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-500 transition-colors"
+            >
+              Hủy
+            </button>
+            <button
+              @click="submitCancellation"
+              :disabled="!cancellationReason.trim() || cancelling"
+              class="px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors"
+            >
+              {{ cancelling ? 'Đang hủy...' : 'Xác nhận hủy' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <ConfirmationModal
+      :isOpen="showSuccessModal"
+      type="success"
+      title="Gửi yêu cầu hủy thành công"
+      message="Yêu cầu hủy đặt phòng của bạn đã được gửi đi. Admin sẽ xem xét và phản hồi trong vòng 24 giờ. Bạn sẽ nhận được thông báo qua email khi có kết quả."
+      confirmText="Đóng"
+      @confirm="closeSuccessModal"
+      @cancel="closeSuccessModal"
+    />
   </div>
 </template>
 
@@ -186,6 +311,8 @@ import { ref, onMounted, computed } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import { useAuthStore } from '@/store/auth'
 import { HomeIcon } from '@heroicons/vue/24/outline'
+import { cancellationService } from '@/services/cancellation.service'
+import ConfirmationModal from '@/components/ConfirmationModal.vue'
 import axios from 'axios'
 
 interface BookingData {
@@ -214,6 +341,14 @@ interface BookingData {
     email: string
     phone: string
   }
+  // Add cancellation request info
+  cancellationRequest?: {
+    id: string
+    status: 'pending' | 'approved' | 'rejected'
+    reason: string
+    requestedAt: string
+    refundAmount: number
+  }
 }
 
 const router = useRouter()
@@ -222,6 +357,14 @@ const authStore = useAuthStore()
 const loading = ref(true)
 const bookings = ref<BookingData[]>([])
 const activeFilter = ref<'all' | 'pending' | 'confirmed' | 'completed' | 'cancelled'>('all')
+
+// Cancellation modal states
+const showCancelModal = ref(false)
+const showReasonModal = ref(false)
+const showSuccessModal = ref(false)
+const selectedBooking = ref<BookingData | null>(null)
+const cancellationReason = ref('')
+const cancelling = ref(false)
 
 const filterTabs = [
   { key: 'all', label: 'Tất cả' },
@@ -233,11 +376,19 @@ const filterTabs = [
 
 const userBookings = computed(() => {
   if (!authStore.user) return []
+  
   return bookings.value.filter(booking => {
-    // Handle both old and new booking formats
-    const userMatches = booking.userId === authStore.user?.id || 
-                       booking.guestInfo?.email === authStore.user?.email
-    return userMatches
+    // Priority 1: Check guestInfo.email
+    if (booking.guestInfo?.email) {
+      return booking.guestInfo.email === authStore.user?.email
+    }
+    
+    // Priority 2: Check userId 
+    if (booking.userId) {
+      return booking.userId === authStore.user?.id
+    }
+    
+    return false
   })
 })
 
@@ -255,15 +406,17 @@ const getBookingCount = (filter: string): number => {
 
 const loadBookings = async () => {
   try {
-    const [bookingsResponse, staysResponse, usersResponse] = await Promise.all([
+    const [bookingsResponse, staysResponse, usersResponse, cancellationRequestsResponse] = await Promise.all([
       axios.get('http://localhost:3001/bookings'),
       axios.get('http://localhost:3001/stays'),
-      axios.get('http://localhost:3002/users')
+      axios.get('http://localhost:3001/users'),
+      axios.get('http://localhost:3001/cancellation-requests')
     ])
     
     const allBookings = bookingsResponse.data
     const allStays = staysResponse.data
     const allUsers = usersResponse.data
+    const allCancellationRequests = cancellationRequestsResponse.data
     
     // Map bookings with stay and user info
     bookings.value = allBookings.map((booking: any) => {
@@ -282,8 +435,11 @@ const loadBookings = async () => {
           lastName: user.lastName,
           email: user.email,
           phone: user.phone
-        } : null
+        } : booking.guestInfo // Preserve existing guestInfo if no user found
       }
+      
+      // Find cancellation request for this booking
+      const cancellationRequest = allCancellationRequests.find((req: any) => req.bookingId === booking.id)
       
       return {
         ...booking,
@@ -294,7 +450,15 @@ const loadBookings = async () => {
         guestInfo: guestInfo,
         // Normalize date fields
         startDate: booking.startDate || booking.checkIn,
-        endDate: booking.endDate || booking.checkOut
+        endDate: booking.endDate || booking.checkOut,
+        // Add cancellation request info
+        cancellationRequest: cancellationRequest ? {
+          id: cancellationRequest.id,
+          status: cancellationRequest.status,
+          reason: cancellationRequest.reason,
+          requestedAt: cancellationRequest.requestedAt,
+          refundAmount: cancellationRequest.refundAmount
+        } : undefined
       }
     })
   } catch (error) {
@@ -374,6 +538,15 @@ const getPaymentStatusText = (paymentStatus: string): string => {
 }
 
 const canCancelBooking = (booking: BookingData): boolean => {
+  // Cannot cancel if already cancelled
+  if (booking.status === 'cancelled') return false
+  
+  // Cannot cancel if there's already a pending cancellation request
+  if (booking.cancellationRequest && booking.cancellationRequest.status === 'pending') return false
+  
+  // Cannot cancel if cancellation request was rejected
+  if (booking.cancellationRequest && booking.cancellationRequest.status === 'rejected') return false
+  
   const startDate = booking.startDate || booking.checkIn
   if (!startDate) return false
   
@@ -390,16 +563,74 @@ const viewBookingDetail = (bookingId: string) => {
   router.push(`/booking-detail/${bookingId}`)
 }
 
-const cancelBooking = async (booking: BookingData) => {
-  if (!confirm('Bạn có chắc chắn muốn hủy đặt phòng này?')) return
+const cancelBooking = (booking: BookingData) => {
+  selectedBooking.value = booking
+  showCancelModal.value = true
+}
+
+const closeCancelModal = () => {
+  showCancelModal.value = false
+  selectedBooking.value = null
+}
+
+const confirmCancelBooking = () => {
+  showCancelModal.value = false
+  showReasonModal.value = true
+}
+
+const closeReasonModal = () => {
+  showReasonModal.value = false
+  selectedBooking.value = null
+  cancellationReason.value = ''
+}
+
+const closeSuccessModal = () => {
+  showSuccessModal.value = false
+  selectedBooking.value = null
+}
+
+const submitCancellation = async () => {
+  if (!selectedBooking.value || !cancellationReason.value.trim() || !authStore.user) return
+  
+  cancelling.value = true
   
   try {
-    console.log('Cancelling booking:', booking.id)
-    // TODO: Implement booking cancellation in store
-    alert('Chức năng hủy đặt phòng sẽ được triển khai sau.')
+    // Create cancellation request instead of cancelling directly
+    const cancellationRequest = await cancellationService.createCancellationRequest(
+      selectedBooking.value.id,
+      authStore.user.id,
+      cancellationReason.value.trim(),
+      selectedBooking.value,
+      selectedBooking.value.guestInfo || {
+        firstName: authStore.user.firstName,
+        lastName: authStore.user.lastName,
+        email: authStore.user.email,
+        phone: authStore.user.phone || ''
+      }
+    )
+    
+    // Update local booking data with cancellation request info
+    const bookingIndex = bookings.value.findIndex(b => b.id === selectedBooking.value!.id)
+    if (bookingIndex !== -1) {
+      bookings.value[bookingIndex].cancellationRequest = {
+        id: cancellationRequest.id,
+        status: cancellationRequest.status,
+        reason: cancellationRequest.reason,
+        requestedAt: cancellationRequest.requestedAt,
+        refundAmount: cancellationRequest.refundAmount
+      }
+    }
+    
+    // Close reason modal and show success modal
+    showReasonModal.value = false
+    cancellationReason.value = ''
+    showSuccessModal.value = true
+    
   } catch (error) {
-    console.error('Error cancelling booking:', error)
-    alert('Có lỗi xảy ra khi hủy đặt phòng.')
+    console.error('Error creating cancellation request:', error)
+    alert('Có lỗi xảy ra khi gửi yêu cầu hủy đặt phòng. Vui lòng thử lại!')
+  } finally {
+    cancelling.value = false
   }
 }
 

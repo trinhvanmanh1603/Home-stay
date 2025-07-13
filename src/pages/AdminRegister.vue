@@ -246,13 +246,13 @@ const handleSubmit = async () => {
 
   try {
     // Check if email already exists
-    const existingUser = await axios.get(`http://localhost:3002/users?email=${form.value.email}`)
+    const existingUser = await axios.get(`http://localhost:3001/users?email=${form.value.email}`)
     if (existingUser.data.length > 0) {
       throw new Error('Email này đã được sử dụng')
     }
 
     // Check if there's already a pending request for this email
-    const existingRequest = await axios.get(`http://localhost:3002/admin-requests?email=${form.value.email}&status=pending`)
+    const existingRequest = await axios.get(`http://localhost:3001/admin-requests?email=${form.value.email}&status=pending`)
     if (existingRequest.data.length > 0) {
       throw new Error('Đã có yêu cầu admin cho email này đang chờ phê duyệt')
     }
@@ -270,7 +270,7 @@ const handleSubmit = async () => {
       requestedAt: new Date().toISOString()
     }
 
-    await axios.post('http://localhost:3002/admin-requests', adminRequest)
+    await axios.post('http://localhost:3001/admin-requests', adminRequest)
 
     successMessage.value = 'Yêu cầu đã được gửi thành công! Admin tổng sẽ xem xét và phê duyệt trong thời gian sớm nhất.'
     
@@ -298,3 +298,4 @@ const handleSubmit = async () => {
   }
 }
 </script>
+

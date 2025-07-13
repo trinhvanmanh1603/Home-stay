@@ -474,7 +474,7 @@ const loadBookings = async () => {
     const [bookingsResponse, staysResponse, usersResponse] = await Promise.all([
       axios.get('http://localhost:3001/bookings'),
       axios.get('http://localhost:3001/stays'),
-      axios.get('http://localhost:3002/users')
+      axios.get('http://localhost:3001/users')
     ])
     
     const allBookings = bookingsResponse.data
@@ -966,3 +966,4 @@ onMounted(() => {
   loadBookings()
 })
 </script>
+

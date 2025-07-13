@@ -257,6 +257,7 @@ import { onMounted, computed, reactive, ref } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { useStayStore } from '@/store/stays'
 import { useBookingStore } from '@/store/booking'
+import { useAuthStore } from '@/store/auth'
 import {
   ArrowLeftIcon,
   StarIcon,
@@ -270,6 +271,7 @@ const route = useRoute()
 const router = useRouter()
 const stayStore = useStayStore()
 const bookingStore = useBookingStore()
+const authStore = useAuthStore()
 
 const stay = ref<Stay | null>(null)
 const loading = ref<boolean>(true)
@@ -284,15 +286,18 @@ const guests = parseInt(route.query.guests as string) || 1
 
 const bookingData = reactive({
   stayId: route.params.id as string,
+  stayTitle: '', // Will be filled when stay is loaded
+  userId: authStore.user?.id || '', // Link to current user
   guestInfo: {
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: ''
+    firstName: authStore.user?.firstName || '',
+    lastName: authStore.user?.lastName || '',
+    email: authStore.user?.email || '',
+    phone: authStore.user?.phone || ''
   },
   checkIn,
   checkOut,
   guests,
+  nights: 0, // Will be calculated
   totalPrice: 0,
   specialRequests: ''
 })
@@ -337,8 +342,17 @@ const handleSubmit = async () => {
   submitting.value = true
   
   try {
+    // Update booking data with calculated values and stay object
     bookingData.totalPrice = totalAmount.value
-    await bookingStore.createBooking(bookingData)
+    bookingData.nights = nights.value
+    bookingData.stayTitle = stay.value.title
+    // Add full stay object for new format compatibility
+    const bookingDataWithStay = {
+      ...bookingData,
+      stay: stay.value
+    }
+    
+    await bookingStore.createBooking(bookingDataWithStay)
     showSuccessModal.value = true
   } catch (error) {
     console.error('Error creating booking:', error)
@@ -355,6 +369,12 @@ const goToHome = () => {
 onMounted(async () => {
   const stayId = route.params.id as string
   
+  // Check authentication
+  if (!authStore.isAuthenticated) {
+    router.push('/login')
+    return
+  }
+  
   if (!checkIn || !checkOut) {
     router.push(`/stay/${stayId}`)
     return
@@ -362,6 +382,11 @@ onMounted(async () => {
   
   try {
     stay.value = await stayStore.getStayById(stayId)
+    // Update booking data with stay title
+    if (stay.value) {
+      bookingData.stayTitle = stay.value.title
+      bookingData.nights = nights.value
+    }
   } catch (error) {
     console.error('Error loading stay:', error)
   } finally {

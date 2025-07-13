@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import axios from 'axios'
 import type { User, LoginCredentials, RegisterData } from '@/types/auth'
 
-const API_BASE_URL = 'http://localhost:3002'
+const API_BASE_URL = 'http://localhost:3001'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)

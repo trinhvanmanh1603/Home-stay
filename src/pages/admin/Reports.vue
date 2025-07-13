@@ -304,7 +304,7 @@ const loadReports = async () => {
     // Load bookings for revenue calculation
     const bookingsResponse = await axios.get('http://localhost:3001/bookings')
     const staysResponse = await axios.get('http://localhost:3001/stays')
-    const usersResponse = await axios.get('http://localhost:3002/users')
+    const usersResponse = await axios.get('http://localhost:3001/users')
 
     let filteredBookings = bookingsResponse.data
     let filteredStays = staysResponse.data
@@ -444,3 +444,4 @@ watch(selectedPeriod, () => {
   loadReports()
 })
 </script>
+

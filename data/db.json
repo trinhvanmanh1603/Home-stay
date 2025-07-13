@@ -339,7 +339,7 @@
       "totalPrice": 1600000,
       "specialRequests": "Booking to test complete function",
       "createdAt": "2025-07-10T08:00:00.000Z",
-      "status": "confirmed",
+      "status": "completed",
       "paymentStatus": "deposit_paid",
       "depositAmount": 800000,
       "remainingAmount": 800000,
@@ -404,6 +404,100 @@
       "depositAmount": 1650000,
       "remainingAmount": 0,
       "paymentHistory": []
+    },
+    {
+      "id": "1752391895201",
+      "stayId": "2",
+      "stayTitle": "Căn hộ hiện đại giữa lòng Sài Gòn",
+      "guestInfo": {
+        "firstName": "Thu Phương",
+        "lastName": "Hoàng Thị ",
+        "email": "phuong@gmail.com",
+        "phone": "0233666878"
+      },
+      "checkIn": "2025-07-16",
+      "checkOut": "2025-07-17",
+      "nights": 1,
+      "guests": 1,
+      "totalPrice": 880000,
+      "specialRequests": "",
+      "createdAt": "2025-07-13T07:31:35.201Z",
+      "status": "confirmed",
+      "paymentStatus": "fully_paid",
+      "depositAmount": 880000,
+      "remainingAmount": 0,
+      "paymentHistory": []
+    },
+    {
+      "id": "1752392577939",
+      "stayId": "1",
+      "stayTitle": "Villa The Ocean View - Nha Trang",
+      "guestInfo": {
+        "firstName": "Thu Phương",
+        "lastName": "Hoàng Thị ",
+        "email": "phuong@gmail.com",
+        "phone": "0233666878"
+      },
+      "checkIn": "2025-07-24",
+      "checkOut": "2025-07-25",
+      "nights": 1,
+      "guests": 1,
+      "totalPrice": 1650000,
+      "specialRequests": "",
+      "createdAt": "2025-07-13T07:42:57.939Z",
+      "status": "pending",
+      "paymentStatus": "deposit_paid",
+      "depositAmount": 825000,
+      "remainingAmount": 825000,
+      "paymentHistory": []
+    },
+    {
+      "id": "1752393191451",
+      "stayId": "6",
+      "stayTitle": "Căn hộ view sông Hàn - Đà Nẵng",
+      "guestInfo": {
+        "firstName": "Trịnh Văn",
+        "lastName": "Mạnh",
+        "email": "admin1@homestay.com",
+        "phone": "0889909566"
+      },
+      "checkIn": "2025-07-15",
+      "checkOut": "2025-07-18",
+      "nights": 3,
+      "guests": 1,
+      "totalPrice": 2970000,
+      "specialRequests": "",
+      "createdAt": "2025-07-13T07:53:11.451Z",
+      "status": "cancelled",
+      "paymentStatus": "deposit_paid",
+      "depositAmount": 1485000,
+      "remainingAmount": 1485000,
+      "paymentHistory": [],
+      "cancellationReason": "k có"
+    },
+    {
+      "id": "1752394418324",
+      "stayId": "1",
+      "stayTitle": "Villa The Ocean View - Nha Trang",
+      "guestInfo": {
+        "firstName": "Thu Phương",
+        "lastName": "Hoàng Thị ",
+        "email": "phuong@gmail.com",
+        "phone": "0233666878"
+      },
+      "checkIn": "2025-07-29",
+      "checkOut": "2025-07-31",
+      "nights": 2,
+      "guests": 1,
+      "totalPrice": 3300000,
+      "specialRequests": "oi doi oi",
+      "createdAt": "2025-07-13T08:13:38.324Z",
+      "status": "cancelled",
+      "paymentStatus": "deposit_paid",
+      "depositAmount": 1650000,
+      "remainingAmount": 1650000,
+      "paymentHistory": [],
+      "cancellationReason": "a"
     }
   ],
   "reviews": [
@@ -434,6 +528,202 @@
       "rating": 5,
       "comment": "ngon",
       "createdAt": "2025-07-13T04:38:31.737Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "admin-001",
+      "email": "admin@homestay.com",
+      "firstName": "Admin",
+      "lastName": "System",
+      "phone": "0123456789",
+      "verified": true,
+      "role": "admin",
+      "super_admin": true,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "1752334233761",
+      "email": "admin@gmail.com",
+      "firstName": "Trịnh Văn",
+      "lastName": "Mạnh",
+      "phone": "0889909566",
+      "verified": true,
+      "role": "guest",
+      "createdAt": "2025-07-12T15:30:33.761Z"
+    },
+    {
+      "id": "1752335059332",
+      "email": "admin1@homestay.com",
+      "firstName": "Trịnh Văn",
+      "lastName": "Mạnh",
+      "phone": "0889909566",
+      "verified": true,
+      "role": "guest",
+      "createdAt": "2025-07-12T15:44:19.332Z"
+    },
+    {
+      "id": "1752336802388",
+      "email": "mmmmanh345@gmail.com",
+      "firstName": "Văn Mạnh",
+      "lastName": "Mạnh",
+      "phone": "0889909567",
+      "verified": true,
+      "role": "admin",
+      "brand": "VinhHomes",
+      "super_admin": false,
+      "createdAt": "2025-07-12T16:13:22.388Z"
+    },
+    {
+      "id": "1752346081139",
+      "email": "vu@gmail.com",
+      "firstName": "lê",
+      "lastName": "Đăng vũ",
+      "phone": "0321654987",
+      "verified": true,
+      "role": "admin",
+      "brand": "SunGroup",
+      "super_admin": false,
+      "createdAt": "2025-07-12T18:48:01.139Z"
+    },
+    {
+      "id": "1752346536796",
+      "email": "manh@example.com",
+      "firstName": "Trịnh Văn",
+      "lastName": "Trịnh",
+      "phone": "0889909566",
+      "brand": "luxyry",
+      "verified": true,
+      "role": "admin",
+      "super_admin": false,
+      "createdAt": "2025-07-12T18:55:36.796Z"
+    },
+    {
+      "id": "1752351397917",
+      "email": "phuong@gmail.com",
+      "firstName": "Thu Phương",
+      "lastName": "Hoàng Thị ",
+      "phone": "0233666878",
+      "verified": true,
+      "role": "guest",
+      "createdAt": "2025-07-12T20:16:37.917Z"
+    }
+  ],
+  "admin-requests": [
+    {
+      "id": "1752336754620",
+      "firstName": "Văn Mạnh",
+      "lastName": "Mạnh",
+      "email": "mmmmanh345@gmail.com",
+      "phone": "0889909567",
+      "reason": "vcvbb",
+      "status": "approved",
+      "requestedAt": "2025-07-12T16:12:34.620Z",
+      "reviewedAt": "2025-07-12T16:13:22.372Z",
+      "reviewedBy": "admin@homestay.com"
+    },
+    {
+      "id": "1752346061529",
+      "firstName": "lê",
+      "lastName": "Đăng vũ",
+      "email": "vu@gmail.com",
+      "phone": "0321654987",
+      "reason": "banhang",
+      "status": "approved",
+      "requestedAt": "2025-07-12T18:47:41.530Z",
+      "reviewedAt": "2025-07-12T18:48:01.124Z",
+      "reviewedBy": "admin@homestay.com"
+    },
+    {
+      "id": "1752346522898",
+      "firstName": "Trịnh Văn",
+      "lastName": "Trịnh",
+      "email": "manh@example.com",
+      "phone": "0889909566",
+      "brand": "luxyry",
+      "reason": "xcxv",
+      "status": "approved",
+      "requestedAt": "2025-07-12T18:55:22.898Z",
+      "reviewedAt": "2025-07-12T18:55:36.781Z",
+      "reviewedBy": "admin@homestay.com"
+    }
+  ],
+  "cancellation-requests": [
+    {
+      "id": "1",
+      "bookingId": "1",
+      "userId": "1",
+      "reason": "Có việc đột xuất không thể đi được",
+      "requestedAt": "2025-07-13T10:00:00.000Z",
+      "status": "approved",
+      "refundAmount": 750000,
+      "booking": {
+        "id": "1",
+        "stayTitle": "Villa The Ocean View - Nha Trang",
+        "checkIn": "2025-07-20",
+        "checkOut": "2025-07-25",
+        "totalPrice": 1500000,
+        "depositAmount": 750000
+      },
+      "guestInfo": {
+        "firstName": "Nguyễn",
+        "lastName": "Văn A",
+        "email": "user@example.com",
+        "phone": "0123456789"
+      },
+      "reviewedAt": "2025-07-13T08:18:13.040Z",
+      "reviewedBy": "mmmmanh345@gmail.com"
+    },
+    {
+      "id": "1752394124237",
+      "bookingId": "1752391895201",
+      "userId": "1752351397917",
+      "reason": "k muon",
+      "requestedAt": "2025-07-13T08:08:44.237Z",
+      "status": "rejected",
+      "refundAmount": 880000,
+      "booking": {
+        "id": "1752391895201",
+        "stayTitle": "Căn hộ hiện đại giữa lòng Sài Gòn",
+        "checkIn": "2025-07-16",
+        "checkOut": "2025-07-17",
+        "totalPrice": 880000,
+        "depositAmount": 880000
+      },
+      "guestInfo": {
+        "firstName": "Thu Phương",
+        "lastName": "Hoàng Thị ",
+        "email": "phuong@gmail.com",
+        "phone": "0233666878"
+      },
+      "reviewedAt": "2025-07-13T08:20:55.132Z",
+      "reviewedBy": "mmmmanh345@gmail.com",
+      "rejectionReason": "d"
+    },
+    {
+      "id": "1752394505737",
+      "bookingId": "1752394418324",
+      "userId": "1752351397917",
+      "reason": "a",
+      "requestedAt": "2025-07-13T08:15:05.737Z",
+      "status": "approved",
+      "refundAmount": 1650000,
+      "booking": {
+        "id": "1752394418324",
+        "stayTitle": "Villa The Ocean View - Nha Trang",
+        "checkIn": "2025-07-29",
+        "checkOut": "2025-07-31",
+        "totalPrice": 3300000,
+        "depositAmount": 1650000
+      },
+      "guestInfo": {
+        "firstName": "Thu Phương",
+        "lastName": "Hoàng Thị ",
+        "email": "phuong@gmail.com",
+        "phone": "0233666878"
+      },
+      "reviewedAt": "2025-07-13T08:18:57.676Z",
+      "reviewedBy": "mmmmanh345@gmail.com"
     }
   ]
 }
