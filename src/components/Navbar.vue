@@ -191,8 +191,9 @@
           <!-- Mobile menu button -->
           <button
             @click="mobileMenuOpen = !mobileMenuOpen"
-            class="md:hidden p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 relative"
+            class="md:hidden p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 relative z-40"
             aria-label="Toggle menu"
+            :aria-expanded="mobileMenuOpen"
           >
             <div class="relative w-6 h-6">
               <span 
@@ -219,123 +220,148 @@
       </div>
 
       <!-- Enhanced Mobile menu -->
-      <div v-show="mobileMenuOpen" class="md:hidden">
-        <div class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-t border-gray-200/30 dark:border-gray-700/30">
-          <div class="px-4 pt-4 pb-3 space-y-2">
-            <MobileNavLink to="/" @click="mobileMenuOpen = false" icon="🏠">
-              Trang chủ
-            </MobileNavLink>
-            <MobileNavLink to="/stays" @click="mobileMenuOpen = false" icon="🔍">
-              Khám phá
-            </MobileNavLink>
-            <MobileNavLink 
-              v-if="authStore.isAuthenticated && !authStore.isAdmin"
-              to="/my-bookings" 
-              @click="mobileMenuOpen = false"
-              icon="📋"
-            >
-              Đặt phòng của tôi
-            </MobileNavLink>
-            
-            <!-- Admin menu for mobile -->
-            <div v-if="authStore.isAdmin" class="border-t border-gray-200/50 dark:border-gray-700/50 pt-3 mt-3">
-              <div class="px-3 py-2 text-xs font-bold text-primary-600 dark:text-primary-400 uppercase tracking-wider">
-                ⚡ Quản trị viên
-              </div>
-              <div class="space-y-1">
-                <MobileNavLink to="/admin" @click="mobileMenuOpen = false" icon="📊" isAdmin>
-                  Dashboard
-                </MobileNavLink>
-                <MobileNavLink to="/admin/stays" @click="mobileMenuOpen = false" icon="🏠" isAdmin>
-                  Quản lý Homestay
-                </MobileNavLink>
-                <MobileNavLink to="/admin/bookings" @click="mobileMenuOpen = false" icon="📋" isAdmin>
-                  Quản lý Đặt phòng
-                </MobileNavLink>
-                <MobileNavLink to="/admin/reviews" @click="mobileMenuOpen = false" icon="⭐" isAdmin>
-                  Quản lý Đánh giá
-                </MobileNavLink>
-                <MobileNavLink to="/admin/update-ratings" @click="mobileMenuOpen = false" icon="⚡" isAdmin>
-                  Cập nhật Rating
-                </MobileNavLink>
-                <MobileNavLink 
-                  v-if="authStore.canManageUsers"
-                  to="/admin/users" 
-                  @click="mobileMenuOpen = false" 
-                  icon="👥" 
-                  isAdmin
-                >
-                  Quản lý Người dùng
-                </MobileNavLink>
-                <MobileNavLink to="/admin/reports" @click="mobileMenuOpen = false" icon="📈" isAdmin>
-                  Báo cáo thống kê
-                </MobileNavLink>
-                <div v-if="authStore.isSuperAdmin" class="border-t border-gray-200/30 dark:border-gray-700/30 pt-2 mt-2">
-                  <MobileNavLink to="/admin/approval" @click="mobileMenuOpen = false" icon="🛡️" isAdmin>
-                    Phê duyệt Admin
+      <Transition
+        enter-active-class="transition ease-out duration-200"
+        enter-from-class="opacity-0 transform -translate-y-2"
+        enter-to-class="opacity-100 transform translate-y-0"
+        leave-active-class="transition ease-in duration-150"
+        leave-from-class="opacity-100 transform translate-y-0"
+        leave-to-class="opacity-0 transform -translate-y-2"
+      >
+        <div v-show="mobileMenuOpen" class="md:hidden relative z-50">
+          <div class="bg-white/98 dark:bg-gray-900/98 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50 shadow-2xl">
+            <div class="px-4 pt-4 pb-6 space-y-2 max-h-[80vh] overflow-y-auto">
+              <!-- Main navigation -->
+              <MobileNavLink to="/" @click="mobileMenuOpen = false" icon="🏠">
+                Trang chủ
+              </MobileNavLink>
+              <MobileNavLink to="/stays" @click="mobileMenuOpen = false" icon="🔍">
+                Khám phá
+              </MobileNavLink>
+              <MobileNavLink 
+                v-if="authStore.isAuthenticated && !authStore.isAdmin"
+                to="/my-bookings" 
+                @click="mobileMenuOpen = false"
+                icon="📋"
+              >
+                Đặt phòng của tôi
+              </MobileNavLink>
+              
+              <!-- Admin menu for mobile -->
+              <div v-if="authStore.isAdmin" class="border-t border-gray-200/50 dark:border-gray-700/50 pt-3 mt-3">
+                <div class="px-3 py-2 text-xs font-bold text-primary-600 dark:text-primary-400 uppercase tracking-wider">
+                  ⚡ Quản trị viên
+                </div>
+                <div class="space-y-1">
+                  <MobileNavLink to="/admin" @click="mobileMenuOpen = false" icon="📊" isAdmin>
+                    Dashboard
                   </MobileNavLink>
+                  <MobileNavLink to="/admin/stays" @click="mobileMenuOpen = false" icon="🏠" isAdmin>
+                    Quản lý Homestay
+                  </MobileNavLink>
+                  <MobileNavLink to="/admin/bookings" @click="mobileMenuOpen = false" icon="📋" isAdmin>
+                    Quản lý Đặt phòng
+                  </MobileNavLink>
+                  <MobileNavLink to="/admin/cancellations" @click="mobileMenuOpen = false" icon="❌" isAdmin>
+                    Yêu cầu hủy phòng
+                  </MobileNavLink>
+                  <MobileNavLink to="/admin/reviews" @click="mobileMenuOpen = false" icon="⭐" isAdmin>
+                    Quản lý Đánh giá
+                  </MobileNavLink>
+                  <MobileNavLink to="/admin/update-ratings" @click="mobileMenuOpen = false" icon="⚡" isAdmin>
+                    Cập nhật Rating
+                  </MobileNavLink>
+                  <MobileNavLink 
+                    v-if="authStore.canManageUsers"
+                    to="/admin/users" 
+                    @click="mobileMenuOpen = false" 
+                    icon="👥" 
+                    isAdmin
+                  >
+                    Quản lý Người dùng
+                  </MobileNavLink>
+                  <MobileNavLink to="/admin/reports" @click="mobileMenuOpen = false" icon="📈" isAdmin>
+                    Báo cáo thống kê
+                  </MobileNavLink>
+                  <div v-if="authStore.isSuperAdmin" class="border-t border-gray-200/30 dark:border-gray-700/30 pt-2 mt-2">
+                    <MobileNavLink to="/admin/approval" @click="mobileMenuOpen = false" icon="🛡️" isAdmin>
+                      Phê duyệt Admin
+                    </MobileNavLink>
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            <!-- Mobile auth section -->
-            <div class="border-t border-gray-200/50 dark:border-gray-700/50 pt-3 mt-3">
-              <div v-if="!authStore.isAuthenticated" class="space-y-2">
-                <MobileNavLink to="/login" @click="mobileMenuOpen = false" icon="👤">
-                  Đăng nhập
-                </MobileNavLink>
-                <div class="px-3">
-                  <RouterLink 
-                    to="/register"
-                    @click="mobileMenuOpen = false"
-                    class="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white py-3 px-4 rounded-lg text-center font-medium transition-all duration-200 hover:shadow-lg flex items-center justify-center space-x-2"
-                  >
-                    <span>✨</span>
-                    <span>Đăng ký ngay</span>
-                  </RouterLink>
-                </div>
-                <div class="px-3 mt-2">
-                  <RouterLink 
-                    to="/admin-register"
-                    @click="mobileMenuOpen = false"
-                    class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-2 px-4 rounded-lg text-center text-sm font-medium transition-all duration-200 hover:shadow-lg flex items-center justify-center space-x-1"
-                  >
-                    <span>🛡️</span>
-                    <span>Đăng ký Admin</span>
-                  </RouterLink>
-                </div>
-              </div>
-              <div v-else>
-                <!-- User info mobile -->
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 mb-3">
-                  <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
-                      {{ authStore.user?.firstName?.charAt(0)?.toUpperCase() }}
+              
+              <!-- Mobile auth section -->
+              <div class="border-t border-gray-200/50 dark:border-gray-700/50 pt-4 mt-3">
+                <div v-if="!authStore.isAuthenticated" class="space-y-3">
+                  <div class="px-3 py-2 text-xs font-bold text-primary-600 dark:text-primary-400 uppercase tracking-wider">
+                    🔐 Đăng nhập / Đăng ký
+                  </div>
+                  <div class="space-y-2">
+                    <div class="px-3">
+                      <RouterLink 
+                        to="/login"
+                        @click="mobileMenuOpen = false"
+                        class="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white py-3 px-4 rounded-lg text-center font-medium transition-all duration-200 hover:shadow-lg flex items-center justify-center space-x-2"
+                      >
+                        <span>👤</span>
+                        <span>Đăng nhập</span>
+                      </RouterLink>
                     </div>
-                    <div>
-                      <p class="font-medium text-gray-900 dark:text-white">
-                        {{ authStore.user?.firstName }} {{ authStore.user?.lastName }}
-                      </p>
-                      <p class="text-xs text-gray-500 dark:text-gray-400">
-                        {{ authStore.isAdmin ? (authStore.isSuperAdmin ? 'Super Admin' : 'Admin') : 'Khách hàng' }}
-                      </p>
+                    <div class="px-3">
+                      <RouterLink 
+                        to="/register"
+                        @click="mobileMenuOpen = false"
+                        class="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-4 rounded-lg text-center font-medium transition-all duration-200 hover:shadow-lg flex items-center justify-center space-x-2"
+                      >
+                        <span>✨</span>
+                        <span>Đăng ký ngay</span>
+                      </RouterLink>
+                    </div>
+                    <div class="px-3 mt-2">
+                      <RouterLink 
+                        to="/admin-register"
+                        @click="mobileMenuOpen = false"
+                        class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-2 px-4 rounded-lg text-center text-sm font-medium transition-all duration-200 hover:shadow-lg flex items-center justify-center space-x-1"
+                      >
+                        <span>🛡️</span>
+                        <span>Đăng ký Admin</span>
+                      </RouterLink>
                     </div>
                   </div>
                 </div>
-                <div class="px-3">
-                  <button
-                    @click="handleLogout"
-                    class="w-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 py-2 px-4 rounded-lg text-center font-medium transition-all duration-200 hover:bg-red-100 dark:hover:bg-red-900/30 flex items-center justify-center space-x-2"
-                  >
-                    <ArrowRightOnRectangleIcon class="w-4 h-4" />
-                    <span>Đăng xuất</span>
-                  </button>
+                <div v-else>
+                  <!-- User info mobile -->
+                  <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 mb-3">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-10 h-10 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
+                        {{ authStore.user?.firstName?.charAt(0)?.toUpperCase() }}
+                      </div>
+                      <div>
+                        <p class="font-medium text-gray-900 dark:text-white">
+                          {{ authStore.user?.firstName }} {{ authStore.user?.lastName }}
+                        </p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">
+                          {{ authStore.isAdmin ? (authStore.isSuperAdmin ? 'Super Admin' : 'Admin') : 'Khách hàng' }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="px-3">
+                    <button
+                      @click="handleLogout"
+                      class="w-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 py-2 px-4 rounded-lg text-center font-medium transition-all duration-200 hover:bg-red-100 dark:hover:bg-red-900/30 flex items-center justify-center space-x-2"
+                    >
+                      <ArrowRightOnRectangleIcon class="w-4 h-4" />
+                      <span>Đăng xuất</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </Transition>
       </div>
     </nav>
     
