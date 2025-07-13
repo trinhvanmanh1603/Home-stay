@@ -1,0 +1,439 @@
+{
+  "stays": [
+    {
+      "id": "1",
+      "title": "Villa The Ocean View - Nha Trang",
+      "description": "Villa sang trọng với view biển tuyệt đẹp, nằm ngay bãi biển Nha Trang. Không gian rộng rãi, hiện đại với đầy đủ tiện nghi cao cấp. hẹ hẹ",
+      "location": "Bãi biển Nha Trang",
+      "city": "Bãi biển Nha Trang",
+      "price": 1500000,
+      "rating": 5,
+      "reviewCount": 1,
+      "type": "villa",
+      "brand": "VinhHomes",
+      "images": [
+        "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      ],
+      "amenities": [
+        "WiFi miễn phí",
+        "Bể bơi",
+        "Điều hòa",
+        "Bãi đậu xe",
+        "Bếp",
+        "TV",
+        "Ban công",
+        "Nhà bếp"
+      ],
+      "host": {
+        "name": "Văn Mạnh Mạnh",
+        "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b637?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+        "verified": true
+      },
+      "maxGuests": 8,
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "available": true,
+      "unavailableDates": [
+        "2024-12-25",
+        "2024-12-26"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Căn hộ hiện đại giữa lòng Sài Gòn",
+      "description": "Căn hộ studio hiện đại, tiện nghi đầy đủ tại trung tâm quận 1. Gần chợ Bến Thành, phố đi bộ Nguyễn Huệ.",
+      "location": "Quận 1",
+      "city": "TP.HCM",
+      "price": 800000,
+      "rating": 4.5,
+      "reviewCount": 2,
+      "type": "apartment",
+      "brand": "SunGroup",
+      "images": [
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      ],
+      "amenities": [
+        "WiFi miễn phí",
+        "Điều hòa",
+        "Bếp nhỏ",
+        "TV"
+      ],
+      "host": {
+        "name": "lê Đăng vũ",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+        "verified": true
+      },
+      "maxGuests": 2,
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "available": true,
+      "unavailableDates": [
+        "2024-12-24",
+        "2024-12-25"
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Nhà gỗ truyền thống - Sa Pa",
+      "description": "Trải nghiệm văn hóa bản địa trong ngôi nhà gỗ truyền thống của người H'Mông. View ruộng bậc thang tuyệt đẹp.",
+      "location": "Bản Cát Cát",
+      "city": "Sa Pa",
+      "price": 600000,
+      "rating": 4.9,
+      "reviewCount": 156,
+      "type": "traditional",
+      "brand": "luxyry",
+      "images": [
+        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      ],
+      "amenities": [
+        "WiFi miễn phí",
+        "Lò sưởi",
+        "Bếp truyền thống",
+        "View ruộng bậc thang"
+      ],
+      "host": {
+        "name": "Trịnh Văn Trịnh",
+        "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+        "verified": true
+      },
+      "maxGuests": 6,
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "available": true,
+      "unavailableDates": []
+    },
+    {
+      "id": "4",
+      "title": "Bungalow bãi biển Mũi Né",
+      "description": "Bungalow riêng tư trên bãi biển Mũi Né với view hoàng hôn tuyệt đẹp. Không gian thơ mộng và lãng mạn.",
+      "location": "Bãi biển Mũi Né",
+      "city": "Phan Thiết",
+      "price": 1200000,
+      "rating": 0,
+      "reviewCount": 0,
+      "type": "bungalow",
+      "brand": "VinhHomes",
+      "images": [
+        "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      ],
+      "amenities": [
+        "WiFi miễn phí",
+        "Điều hòa",
+        "Bếp nhỏ",
+        "View biển",
+        "Bãi đậu xe"
+      ],
+      "host": {
+        "name": "Văn Mạnh Mạnh",
+        "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b637?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+        "verified": true
+      },
+      "maxGuests": 4,
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "available": true,
+      "unavailableDates": []
+    },
+    {
+      "id": "5",
+      "title": "Villa sang trọng Đà Lạt",
+      "description": "Villa cao cấp tại trung tâm Đà Lạt với kiến trúc Pháp cổ. Khu vườn đẹp và không khí trong lành.",
+      "location": "Trung tâm Đà Lạt",
+      "city": "Đà Lạt",
+      "price": 2000000,
+      "rating": 0,
+      "reviewCount": 0,
+      "type": "villa",
+      "brand": "SunGroup",
+      "images": [
+        "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      ],
+      "amenities": [
+        "WiFi miễn phí",
+        "Lò sưởi",
+        "Bếp đầy đủ",
+        "Khu vườn",
+        "Bãi đậu xe",
+        "TV",
+        "Điều hòa"
+      ],
+      "host": {
+        "name": "lê Đăng vũ",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+        "verified": true
+      },
+      "maxGuests": 8,
+      "bedrooms": 4,
+      "bathrooms": 3,
+      "available": true,
+      "unavailableDates": []
+    },
+    {
+      "id": "6",
+      "title": "Căn hộ view sông Hàn - Đà Nẵng",
+      "description": "Căn hộ hiện đại với view sông Hàn tuyệt đẹp. Gần bãi biển Mỹ Khê và trung tâm thành phố.",
+      "location": "Bên sông Hàn",
+      "city": "Bên sông Hàn",
+      "price": 900000,
+      "rating": 0,
+      "reviewCount": 0,
+      "type": "apartment",
+      "brand": "luxyry",
+      "images": [
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      ],
+      "amenities": [
+        "WiFi miễn phí",
+        "Điều hòa",
+        "View sông",
+        "Bếp đầy đủ",
+        "Bãi đậu xe"
+      ],
+      "host": {
+        "name": "Trịnh Văn Trịnh",
+        "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+        "verified": true
+      },
+      "maxGuests": 4,
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "available": true,
+      "unavailableDates": []
+    }
+  ],
+  "bookings": [
+    {
+      "id": "1752333246142",
+      "stayId": "2",
+      "stay": {
+        "id": "2",
+        "title": "Căn hộ hiện đại giữa lòng Sài Gòn",
+        "brand": "SaigonStay"
+      },
+      "stayTitle": "Căn hộ hiện đại giữa lòng Sài Gòn",
+      "stayBrand": "SaigonStay",
+      "userId": "1752334233761",
+      "guestInfo": {
+        "firstName": "Trịnh Văn",
+        "lastName": "Mạnh",
+        "email": "admin1@homestay.com",
+        "phone": "0889909566"
+      },
+      "checkIn": "2025-08-01",
+      "checkOut": "2025-08-05",
+      "startDate": "2025-08-01",
+      "endDate": "2025-08-05",
+      "guests": 2,
+      "totalPrice": 3200000,
+      "depositAmount": 960000,
+      "remainingAmount": 0,
+      "specialRequests": "",
+      "status": "completed",
+      "paymentStatus": "fully_paid",
+      "paymentHistory": [],
+      "createdAt": "2025-07-12T14:54:06.142Z"
+    },
+    {
+      "id": "1752381321857",
+      "stayId": "3",
+      "stay": {
+        "id": "3",
+        "title": "Nhà gỗ truyền thống - Sa Pa",
+        "description": "Trải nghiệm văn hóa bản địa trong ngôi nhà gỗ truyền thống của người H'Mông. View ruộng bậc thang tuyệt đẹp.",
+        "location": "Bản Cát Cát",
+        "city": "Sa Pa",
+        "price": 600000,
+        "rating": 4.9,
+        "reviewCount": 156,
+        "type": "traditional",
+        "brand": "luxyry",
+        "images": [
+          "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+        ],
+        "amenities": [
+          "WiFi miễn phí",
+          "Lò sưởi",
+          "Bếp truyền thống",
+          "View ruộng bậc thang"
+        ],
+        "host": {
+          "name": "Trịnh Văn Trịnh",
+          "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+          "verified": true
+        },
+        "maxGuests": 6,
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "available": true,
+        "unavailableDates": []
+      },
+      "stayTitle": "Nhà gỗ truyền thống - Sa Pa",
+      "stayBrand": "luxyry",
+      "guestInfo": {
+        "firstName": "Trịnh Văn",
+        "lastName": "Mạnh",
+        "email": "admin1@homestay.com",
+        "phone": "0889909566"
+      },
+      "checkIn": "2025-07-13",
+      "checkOut": "2025-07-16",
+      "guests": 1,
+      "totalPrice": 1980000,
+      "specialRequests": "",
+      "createdAt": "2025-07-13T04:35:21.857Z",
+      "status": "confirmed",
+      "paymentStatus": "deposit_paid",
+      "depositAmount": 990000,
+      "remainingAmount": 990000,
+      "paymentHistory": []
+    },
+    {
+      "id": "test_booking_complete",
+      "stayId": "1",
+      "stay": {
+        "id": "1",
+        "title": "Villa The Ocean View - Nha Trang",
+        "brand": "VinhHomes"
+      },
+      "stayTitle": "Villa The Ocean View - Nha Trang",
+      "stayBrand": "VinhHomes",
+      "guestInfo": {
+        "firstName": "Test",
+        "lastName": "User",
+        "email": "test@example.com",
+        "phone": "0123456789"
+      },
+      "checkIn": "2025-07-10",
+      "checkOut": "2025-07-12",
+      "guests": 2,
+      "totalPrice": 3000000,
+      "specialRequests": "Test booking for complete function",
+      "createdAt": "2025-07-10T10:00:00.000Z",
+      "status": "completed",
+      "paymentStatus": "deposit_paid",
+      "depositAmount": 1500000,
+      "remainingAmount": 1500000,
+      "paymentHistory": []
+    },
+    {
+      "id": "test_booking_ready_complete",
+      "stayId": "2",
+      "stay": {
+        "id": "2",
+        "title": "Căn hộ hiện đại giữa lòng Sài Gòn",
+        "brand": "SaigonStay"
+      },
+      "stayTitle": "Căn hộ hiện đại giữa lòng Sài Gòn",
+      "stayBrand": "SaigonStay",
+      "guestInfo": {
+        "firstName": "Admin",
+        "lastName": "Test",
+        "email": "admin.test@homestay.com",
+        "phone": "0987654321"
+      },
+      "checkIn": "2025-07-10",
+      "checkOut": "2025-07-12",
+      "guests": 2,
+      "totalPrice": 1600000,
+      "specialRequests": "Booking to test complete function",
+      "createdAt": "2025-07-10T08:00:00.000Z",
+      "status": "confirmed",
+      "paymentStatus": "deposit_paid",
+      "depositAmount": 800000,
+      "remainingAmount": 800000,
+      "paymentHistory": []
+    },
+    {
+      "id": "1752385937788",
+      "stayId": "1",
+      "stay": {
+        "id": "1",
+        "title": "Villa The Ocean View - Nha Trang",
+        "description": "Villa sang trọng với view biển tuyệt đẹp, nằm ngay bãi biển Nha Trang. Không gian rộng rãi, hiện đại với đầy đủ tiện nghi cao cấp. hẹ hẹ",
+        "location": "Bãi biển Nha Trang",
+        "city": "Bãi biển Nha Trang",
+        "price": 1500000,
+        "rating": 4.8,
+        "reviewCount": 127,
+        "type": "villa",
+        "brand": "VinhHomes",
+        "images": [
+          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+        ],
+        "amenities": [
+          "WiFi miễn phí",
+          "Bể bơi",
+          "Điều hòa",
+          "Bãi đậu xe",
+          "Bếp",
+          "TV",
+          "Ban công",
+          "Nhà bếp"
+        ],
+        "host": {
+          "name": "Văn Mạnh Mạnh",
+          "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b637?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+          "verified": true
+        },
+        "maxGuests": 8,
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "available": true,
+        "unavailableDates": [
+          "2024-12-25",
+          "2024-12-26"
+        ]
+      },
+      "guestInfo": {
+        "firstName": "Thu Phương",
+        "lastName": "Hoàng Thị ",
+        "email": "phuong@gmail.com",
+        "phone": "0233666878"
+      },
+      "checkIn": "2025-07-21",
+      "checkOut": "2025-07-22",
+      "guests": 2,
+      "totalPrice": 1650000,
+      "specialRequests": "k",
+      "createdAt": "2025-07-13T05:52:17.788Z",
+      "status": "completed",
+      "paymentStatus": "fully_paid",
+      "depositAmount": 1650000,
+      "remainingAmount": 0,
+      "paymentHistory": []
+    }
+  ],
+  "reviews": [
+    {
+      "id": "review_001",
+      "stayId": "1",
+      "guestId": "1752351397917",
+      "guestName": "Thu Phương Hoàng",
+      "rating": 5,
+      "comment": "Homestay rất đẹp và sạch sẽ. View biển tuyệt vời, chủ nhà thân thiện. Sẽ quay lại lần nữa!",
+      "adminReply": "Cảm ơn bạn đã lựa chọn homestay của chúng tôi. Rất vui khi bạn hài lòng với dịch vụ!",
+      "createdAt": "2025-07-10T10:30:00.000Z"
+    },
+    {
+      "id": "review_002",
+      "stayId": "2",
+      "guestId": "1752334233761",
+      "guestName": "Trịnh Văn Mạnh",
+      "rating": 4,
+      "comment": "Căn hộ ở vị trí thuận tiện, gần trung tâm. Tiện nghi đầy đủ, giá cả hợp lý.",
+      "createdAt": "2025-07-09T15:20:00.000Z"
+    },
+    {
+      "id": "review_1752381511737_8ckqu0y20",
+      "stayId": "2",
+      "guestId": "1752335059332",
+      "guestName": "Trịnh Văn Mạnh",
+      "rating": 5,
+      "comment": "ngon",
+      "createdAt": "2025-07-13T04:38:31.737Z"
+    }
+  ]
+}

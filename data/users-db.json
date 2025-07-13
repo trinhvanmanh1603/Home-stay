@@ -1,0 +1,120 @@
+{
+  "users": [
+    {
+      "id": "admin-001",
+      "email": "admin@homestay.com",
+      "firstName": "Admin",
+      "lastName": "System",
+      "phone": "0123456789",
+      "verified": true,
+      "role": "admin",
+      "super_admin": true,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "1752334233761",
+      "email": "admin@gmail.com",
+      "firstName": "Trịnh Văn",
+      "lastName": "Mạnh",
+      "phone": "0889909566",
+      "verified": true,
+      "role": "guest",
+      "createdAt": "2025-07-12T15:30:33.761Z"
+    },
+    {
+      "id": "1752335059332",
+      "email": "admin1@homestay.com",
+      "firstName": "Trịnh Văn",
+      "lastName": "Mạnh",
+      "phone": "0889909566",
+      "verified": true,
+      "role": "guest",
+      "createdAt": "2025-07-12T15:44:19.332Z"
+    },
+    {
+      "id": "1752336802388",
+      "email": "mmmmanh345@gmail.com",
+      "firstName": "Văn Mạnh",
+      "lastName": "Mạnh",
+      "phone": "0889909567",
+      "verified": true,
+      "role": "admin",
+      "brand": "VinhHomes",
+      "super_admin": false,
+      "createdAt": "2025-07-12T16:13:22.388Z"
+    },
+    {
+      "id": "1752346081139",
+      "email": "vu@gmail.com",
+      "firstName": "lê",
+      "lastName": "Đăng vũ",
+      "phone": "0321654987",
+      "verified": true,
+      "role": "admin",
+      "brand": "SunGroup",
+      "super_admin": false,
+      "createdAt": "2025-07-12T18:48:01.139Z"
+    },
+    {
+      "id": "1752346536796",
+      "email": "manh@example.com",
+      "firstName": "Trịnh Văn",
+      "lastName": "Trịnh",
+      "phone": "0889909566",
+      "brand": "luxyry",
+      "verified": true,
+      "role": "admin",
+      "super_admin": false,
+      "createdAt": "2025-07-12T18:55:36.796Z"
+    },
+    {
+      "id": "1752351397917",
+      "email": "phuong@gmail.com",
+      "firstName": "Thu Phương",
+      "lastName": "Hoàng Thị ",
+      "phone": "0233666878",
+      "verified": true,
+      "role": "guest",
+      "createdAt": "2025-07-12T20:16:37.917Z"
+    }
+  ],
+  "admin-requests": [
+    {
+      "id": "1752336754620",
+      "firstName": "Văn Mạnh",
+      "lastName": "Mạnh",
+      "email": "mmmmanh345@gmail.com",
+      "phone": "0889909567",
+      "reason": "vcvbb",
+      "status": "approved",
+      "requestedAt": "2025-07-12T16:12:34.620Z",
+      "reviewedAt": "2025-07-12T16:13:22.372Z",
+      "reviewedBy": "admin@homestay.com"
+    },
+    {
+      "id": "1752346061529",
+      "firstName": "lê",
+      "lastName": "Đăng vũ",
+      "email": "vu@gmail.com",
+      "phone": "0321654987",
+      "reason": "banhang",
+      "status": "approved",
+      "requestedAt": "2025-07-12T18:47:41.530Z",
+      "reviewedAt": "2025-07-12T18:48:01.124Z",
+      "reviewedBy": "admin@homestay.com"
+    },
+    {
+      "id": "1752346522898",
+      "firstName": "Trịnh Văn",
+      "lastName": "Trịnh",
+      "email": "manh@example.com",
+      "phone": "0889909566",
+      "brand": "luxyry",
+      "reason": "xcxv",
+      "status": "approved",
+      "requestedAt": "2025-07-12T18:55:22.898Z",
+      "reviewedAt": "2025-07-12T18:55:36.781Z",
+      "reviewedBy": "admin@homestay.com"
+    }
+  ]
+}

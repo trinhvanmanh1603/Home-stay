@@ -1,0 +1,43 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Trịnh Văn",
+      "lastName": "Trịnh",
+      "email": "admin@test.com",
+      "phone": "0123456789",
+      "avatar": "",
+      "verified": true,
+      "role": "super_admin",
+      "super_admin": true,
+      "brand": null,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "firstName": "Nguyễn",
+      "lastName": "An",
+      "email": "user@test.com",
+      "phone": "0987654321",
+      "avatar": "",
+      "verified": true,
+      "role": "guest",
+      "super_admin": false,
+      "brand": null,
+      "createdAt": "2024-01-02T00:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "firstName": "Lê Thị",
+      "lastName": "Mai",
+      "email": "admin2@test.com",
+      "phone": "0555666777",
+      "avatar": "",
+      "verified": true,
+      "role": "admin",
+      "super_admin": false,
+      "brand": "VinhHomes",
+      "createdAt": "2024-01-03T00:00:00.000Z"
+    }
+  ]
+}
