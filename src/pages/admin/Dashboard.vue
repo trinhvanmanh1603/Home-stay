@@ -179,6 +179,14 @@
                 </span>
               </router-link>
 
+              <router-link to="/admin/cancellations" 
+                          class="flex items-center p-4 bg-red-50 dark:bg-red-900/20 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
+                <ExclamationTriangleIcon class="w-5 h-5 text-red-600 dark:text-red-400 mr-3" />
+                <span class="text-red-600 dark:text-red-400 font-medium">
+                  Yêu cầu Hủy phòng
+                </span>
+              </router-link>
+
               <router-link to="/admin/reviews" 
                           class="flex items-center p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/30 transition-colors">
                 <ChatBubbleLeftEllipsisIcon class="w-5 h-5 text-indigo-600 dark:text-indigo-400 mr-3" />
@@ -228,7 +236,8 @@ import {
   CurrencyDollarIcon,
   ChartBarIcon,
   ChatBubbleLeftEllipsisIcon,
-  StarIcon
+  StarIcon,
+  ExclamationTriangleIcon
 } from '@heroicons/vue/24/outline'
 import axios from 'axios'
 import type { Stats, RecentBooking } from '@/types'
@@ -300,7 +309,7 @@ const loadStats = async () => {
     // Load users - fallback to mock data if server not available
     let allUsers = []
     try {
-      const usersResponse = await axios.get('http://localhost:3002/users')
+      const usersResponse = await axios.get('http://localhost:3001/users')
       allUsers = usersResponse.data
       stats.value.totalUsers = usersResponse.data.length
     } catch (error) {
@@ -389,3 +398,4 @@ onMounted(() => {
   loadStats()
 })
 </script>
+

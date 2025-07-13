@@ -20,6 +20,7 @@ import Reports from '../pages/admin/Reports.vue'
 import AdminApproval from '../pages/admin/AdminApproval.vue'
 import UpdateRatings from '../pages/admin/UpdateRatings.vue'
 import ManageReviews from '../pages/admin/ManageReviews.vue'
+import ManageCancellations from '../pages/admin/ManageCancellations.vue'
 
 const routes = [
   {
@@ -109,6 +110,12 @@ const routes = [
     path: '/admin/bookings',
     name: 'AdminManageBookings',
     component: ManageBookings,
+    meta: { requiresAuth: true, requiresAdmin: true }
+  },
+  {
+    path: '/admin/cancellations',
+    name: 'AdminManageCancellations',
+    component: ManageCancellations,
     meta: { requiresAuth: true, requiresAdmin: true }
   },
   {

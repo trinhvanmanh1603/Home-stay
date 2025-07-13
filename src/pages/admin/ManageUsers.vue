@@ -295,7 +295,7 @@ const openConfirmationModal = (config: typeof confirmationConfig.value) => {
 
 const loadUsers = async () => {
   try {
-    const response = await axios.get('http://localhost:3002/users')
+    const response = await axios.get('http://localhost:3001/users')
     users.value = response.data
   } catch (error) {
     console.error('Error loading users:', error)
@@ -406,7 +406,7 @@ const editUser = (user: User) => {
 
 const saveUser = async () => {
   try {
-    await axios.put(`http://localhost:3002/users/${editingUser.value.id}`, editingUser.value)
+    await axios.put(`http://localhost:3001/users/${editingUser.value.id}`, editingUser.value)
     const index = users.value.findIndex(u => u.id === editingUser.value.id)
     if (index !== -1) {
       users.value[index] = editingUser.value as User
@@ -428,7 +428,7 @@ const saveUser = async () => {
 
 const verifyUser = async (userId: string) => {
   try {
-    await axios.patch(`http://localhost:3002/users/${userId}`, {
+    await axios.patch(`http://localhost:3001/users/${userId}`, {
       verified: true
     })
     const user = users.value.find(u => u.id === userId)
@@ -459,7 +459,7 @@ const deleteUser = async (userId: string) => {
     details: 'Hành động này không thể hoàn tác. Tất cả dữ liệu của người dùng sẽ bị xóa vĩnh viễn.',
     onConfirm: async () => {
       try {
-        await axios.delete(`http://localhost:3002/users/${userId}`)
+        await axios.delete(`http://localhost:3001/users/${userId}`)
         users.value = users.value.filter(user => user.id !== userId)
         showConfirmationModal.value = false
       } catch (error) {
@@ -482,3 +482,4 @@ onMounted(() => {
   loadUsers()
 })
 </script>
+

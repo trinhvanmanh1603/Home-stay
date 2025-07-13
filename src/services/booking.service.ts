@@ -22,6 +22,7 @@ export class BookingService {
       depositAmount,
       remainingAmount,
       paymentHistory: []
+      // Stay object will be embedded based on input data
     }
     
     return await this.apiService.post<Booking>('/bookings', newBooking)

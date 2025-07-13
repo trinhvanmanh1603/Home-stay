@@ -115,6 +115,12 @@
                       <span class="text-lg group-hover:scale-110 transition-transform text-orange-500">📋</span>
                       <span class="font-medium">Đặt phòng</span>
                     </RouterLink>
+                    <RouterLink to="/admin/cancellations" 
+                                @click="adminQuickMenu = false"
+                                class="flex items-center space-x-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 group">
+                      <span class="text-lg group-hover:scale-110 transition-transform text-red-500">❌</span>
+                      <span class="font-medium">Yêu cầu hủy</span>
+                    </RouterLink>
                     <RouterLink to="/admin/reviews" 
                                 @click="adminQuickMenu = false"
                                 class="flex items-center space-x-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 group">

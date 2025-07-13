@@ -236,7 +236,7 @@ const openConfirmationModal = (config: typeof confirmationConfig.value) => {
 
 const loadRequests = async () => {
   try {
-    const response = await axios.get('http://localhost:3002/admin-requests')
+    const response = await axios.get('http://localhost:3001/admin-requests')
     requests.value = response.data.sort((a: AdminRequest, b: AdminRequest) => 
       new Date(b.requestedAt).getTime() - new Date(a.requestedAt).getTime()
     )
@@ -315,7 +315,7 @@ const approveRequest = async (request: AdminRequest) => {
       reviewedBy: authStore.user?.email
     }
     
-    await axios.put(`http://localhost:3002/admin-requests/${request.id}`, updatedRequest)
+    await axios.put(`http://localhost:3001/admin-requests/${request.id}`, updatedRequest)
 
     // Create admin user
     const newAdmin = {
@@ -330,7 +330,7 @@ const approveRequest = async (request: AdminRequest) => {
       createdAt: new Date().toISOString()
     }
 
-    await axios.post('http://localhost:3002/users', newAdmin)
+    await axios.post('http://localhost:3001/users', newAdmin)
 
     // Update local state
     const index = requests.value.findIndex(r => r.id === request.id)
@@ -380,7 +380,7 @@ const rejectRequest = async () => {
       rejectionReason: rejectionReason.value
     }
     
-    await axios.put(`http://localhost:3002/admin-requests/${selectedRequest.value.id}`, updatedRequest)
+    await axios.put(`http://localhost:3001/admin-requests/${selectedRequest.value.id}`, updatedRequest)
 
     // Update local state
     const index = requests.value.findIndex(r => r.id === selectedRequest.value!.id)
@@ -417,3 +417,4 @@ onMounted(() => {
   loadRequests()
 })
 </script>
+
