@@ -1,60 +1,27 @@
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Header -->
-    <div class="bg-white dark:bg-gray-800 shadow">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-6">
-          <div>
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-              Quản lý Homestay
-              <span v-if="authStore.user?.brand && !authStore.isSuperAdmin" class="text-lg text-blue-600 dark:text-blue-400 block">
-                {{ authStore.user.brand }}
-              </span>
-            </h1>
-            <p class="text-gray-600 dark:text-gray-400">
-              <span v-if="authStore.user?.brand && !authStore.isSuperAdmin">
-                Quản lý homestay thuộc thương hiệu {{ authStore.user.brand }}
-              </span>
-              <span v-else-if="authStore.isSuperAdmin">
-                Giám sát tất cả homestay trong hệ thống (quyền xem và theo dõi)
-              </span>
-              <span v-else>
-                Quản lý tất cả homestay trong hệ thống
-              </span>
-            </p>
-          </div>
-          <RouterLink 
-            v-if="authStore.canCreateHomestays"
-            to="/admin/stays/add"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors inline-flex items-center"
-          >
-            <PlusIcon class="w-5 h-5 mr-2" />
-            Thêm Homestay
-          </RouterLink>
-        </div>
-      </div>
-    </div>
+    <AdminPageHeader
+      title="Quản lý Homestay"
+      :actions="authStore.canCreateHomestays ? [
+        {
+          type: 'link',
+          to: '/admin/stays/add',
+          text: 'Thêm Homestay',
+          icon: 'plus'
+        }
+      ] : []"
+    />
 
-    <!-- Filters -->
+    <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <!-- Super Admin Notice -->
-      <div v-if="authStore.isSuperAdmin" class="mb-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-        <div class="flex items-start">
-          <div class="flex-shrink-0">
-            <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-            </svg>
-          </div>
-          <div class="ml-3">
-            <h3 class="text-sm font-medium text-blue-800 dark:text-blue-200">
-              Quyền Super Admin
-            </h3>
-            <div class="mt-2 text-sm text-blue-700 dark:text-blue-300">
-              <p>Bạn đang ở chế độ giám sát. Bạn có thể xem tất cả thông tin nhưng không thể thêm, sửa, hoặc xóa homestay.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <SuperAdminNotice 
+        v-if="authStore.isSuperAdmin"
+        message="Với quyền Super Admin, bạn có thể xem và theo dõi tất cả homestay nhưng không thể chỉnh sửa. Chỉ brand admin mới có quyền quản lý homestay thuộc thương hiệu của họ."
+        class="mb-6"
+      />
+
+      <!-- Filters -->
 
       <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -128,14 +95,13 @@
           </h3>
         </div>
         
-        <div v-if="loading" class="p-8 text-center">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p class="mt-4 text-gray-600 dark:text-gray-400">Đang tải...</p>
-        </div>
+        <LoadingSpinner v-if="loading" message="Đang tải..." />
 
-        <div v-else-if="filteredStays.length === 0" class="p-8 text-center">
-          <p class="text-gray-600 dark:text-gray-400">Không tìm thấy homestay nào</p>
-        </div>
+        <EmptyState 
+          v-else-if="filteredStays.length === 0"
+          title="Không tìm thấy homestay nào"
+          description="Hãy thử thay đổi bộ lọc tìm kiếm để xem kết quả khác"
+        />
 
         <div v-else class="divide-y divide-gray-200 dark:divide-gray-700">
           <div v-for="stay in paginatedStays" :key="stay.id" 
@@ -180,29 +146,35 @@
                 </div>
                 
                 <div class="flex items-center space-x-2">
-                  <span :class="getStatusBadgeClass(stay.available ? 'active' : 'inactive')" 
-                        class="px-2 py-1 text-xs rounded-full">
-                    {{ getStatusText(stay.available ? 'active' : 'inactive') }}
-                  </span>
+                  <StatusBadge 
+                    :status="stay.available ? 'active' : 'inactive'" 
+                    :label="stay.available ? 'Hoạt động' : 'Tạm dừng'"
+                  />
                   
                   <div class="flex space-x-1">
-                    <button @click="viewStay(stay)" 
-                            class="p-2 text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                            title="Xem chi tiết">
-                      <EyeIcon class="w-4 h-4" />
-                    </button>
-                    <button v-if="authStore.canEditHomestays"
-                            @click="editStay(stay)" 
-                            class="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
-                            title="Chỉnh sửa">
-                      <PencilIcon class="w-4 h-4" />
-                    </button>
-                    <button v-if="authStore.canDeleteHomestays"
-                            @click="deleteStay(stay.id)" 
-                            class="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                            title="Xóa">
-                      <TrashIcon class="w-4 h-4" />
-                    </button>
+                    <ActionButton
+                      @click="viewStay(stay)"
+                      variant="ghost"
+                      size="sm"
+                      icon="eye"
+                      title="Xem chi tiết"
+                    />
+                    <ActionButton
+                      v-if="authStore.canEditHomestays"
+                      @click="editStay(stay)"
+                      variant="ghost"
+                      size="sm"
+                      icon="pencil"
+                      title="Chỉnh sửa"
+                    />
+                    <ActionButton
+                      v-if="authStore.canDeleteHomestays"
+                      @click="deleteStay(stay.id)"
+                      variant="ghost"
+                      size="sm"
+                      icon="trash"
+                      title="Xóa"
+                    />
                   </div>
                 </div>
               </div>
@@ -256,19 +228,19 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
-import { 
-  PlusIcon, 
-  PencilIcon, 
-  TrashIcon,
-  StarIcon,
-  EyeIcon
-} from '@heroicons/vue/24/outline'
+import { useRouter } from 'vue-router'
+import { StarIcon } from '@heroicons/vue/24/outline'
 import { useStayStore } from '@/store/stays'
 import { useAuthStore } from '@/store/auth'
 import type { Stay } from '@/types'
 import axios from 'axios'
 import ConfirmationModal from '@/components/ConfirmationModal.vue'
+import AdminPageHeader from '@/components/admin/AdminPageHeader.vue'
+import SuperAdminNotice from '@/components/admin/SuperAdminNotice.vue'
+import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
+import EmptyState from '@/components/common/EmptyState.vue'
+import StatusBadge from '@/components/common/StatusBadge.vue'
+import ActionButton from '@/components/common/ActionButton.vue'
 
 const stayStore = useStayStore()
 const authStore = useAuthStore()
@@ -390,32 +362,6 @@ const formatCurrency = (amount: number): string => {
   }).format(amount)
 }
 
-const getStatusBadgeClass = (status: string): string => {
-  switch (status) {
-    case 'active':
-      return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
-    case 'inactive':
-      return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
-    case 'maintenance':
-      return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'
-    default:
-      return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'
-  }
-}
-
-const getStatusText = (status: string): string => {
-  switch (status) {
-    case 'active':
-      return 'Hoạt động'
-    case 'inactive':
-      return 'Tạm dừng'
-    case 'maintenance':
-      return 'Bảo trì'
-    default:
-      return status
-  }
-}
-
 const viewStay = (stay: Stay) => {
   router.push(`/stay/${stay.id}`)
 }
@@ -454,14 +400,6 @@ const deleteStay = async (stayId: string) => {
 }
 
 onMounted(() => {
-  console.log('User role:', authStore.user?.role)
-  console.log('Super admin:', authStore.user?.super_admin)
-  console.log('Is super admin:', authStore.isSuperAdmin)
-  console.log('Is admin:', authStore.isAdmin)
-  console.log('Can create homestays:', authStore.canCreateHomestays)
-  console.log('Can edit homestays:', authStore.canEditHomestays)
-  console.log('Can delete homestays:', authStore.canDeleteHomestays)
-  
   loadStays()
 })
 </script>

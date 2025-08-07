@@ -9,6 +9,21 @@ export interface Stats {
   totalRevenue: number
 }
 
+export interface AdminRequest {
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  brand: string
+  reason: string
+  status: 'pending' | 'approved' | 'rejected'
+  requestedAt: string
+  reviewedAt?: string
+  reviewedBy?: string
+  rejectionReason?: string
+}
+
 export interface ConfirmationModalConfig {
   type: 'success' | 'danger' | 'warning' | 'info'
   title: string

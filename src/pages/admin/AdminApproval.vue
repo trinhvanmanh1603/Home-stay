@@ -1,41 +1,38 @@
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Header -->
-    <div class="bg-white dark:bg-gray-800 shadow">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-6">
-          <div>
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-              Phê duyệt Admin
-            </h1>
-            <p class="text-gray-600 dark:text-gray-400">
-              Quản lý yêu cầu quyền admin từ người dùng
-            </p>
-          </div>
-          <div class="flex items-center space-x-4">
-            <span class="text-sm text-gray-500 dark:text-gray-400">
-              Chỉ admin tổng mới có thể phê duyệt
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <AdminPageHeader 
+      title="Phê duyệt Admin"
+      description="Quản lý yêu cầu quyền admin từ người dùng"
+    >
+      <template #actions>
+        <span class="text-sm text-gray-500 dark:text-gray-400">
+          Chỉ admin tổng mới có thể phê duyệt
+        </span>
+      </template>
+    </AdminPageHeader>
 
     <!-- Stats -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <div class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{{ pendingRequests.length }}</div>
-          <div class="text-sm text-gray-600 dark:text-gray-400">Chờ phê duyệt</div>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <div class="text-2xl font-bold text-green-600 dark:text-green-400">{{ approvedRequests.length }}</div>
-          <div class="text-sm text-gray-600 dark:text-gray-400">Đã phê duyệt</div>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <div class="text-2xl font-bold text-red-600 dark:text-red-400">{{ rejectedRequests.length }}</div>
-          <div class="text-sm text-gray-600 dark:text-gray-400">Đã từ chối</div>
-        </div>
+        <InfoCard 
+          title="Chờ phê duyệt"
+          :value="pendingRequests.length"
+          icon="clock"
+          variant="stats"
+        />
+        <InfoCard 
+          title="Đã phê duyệt"
+          :value="approvedRequests.length"
+          icon="check"
+          variant="stats"
+        />
+        <InfoCard 
+          title="Đã từ chối"
+          :value="rejectedRequests.length"
+          icon="x-mark"
+          variant="stats"
+        />
       </div>
 
       <!-- Filters -->
@@ -207,6 +204,8 @@ import { useAuthStore } from '@/store/auth'
 import { CheckIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import axios from 'axios'
 import ConfirmationModal from '@/components/ConfirmationModal.vue'
+import AdminPageHeader from '@/components/admin/AdminPageHeader.vue'
+import InfoCard from '@/components/common/InfoCard.vue'
 import type { AdminRequest } from '@/types'
 
 const authStore = useAuthStore()

@@ -36,15 +36,20 @@
         
         <!-- Footer -->
         <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 rounded-b-lg flex justify-end space-x-3">
-          <button @click="cancel"
-                  class="px-4 py-2 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-500 transition-colors">
+          <ActionButton
+            @click="cancel"
+            variant="ghost"
+            size="md"
+          >
             {{ cancelText }}
-          </button>
-          <button @click="confirm"
-                  :class="confirmButtonClass"
-                  class="px-4 py-2 rounded-lg font-medium transition-colors">
+          </ActionButton>
+          <ActionButton
+            @click="confirm"
+            :variant="type === 'danger' ? 'danger' : type === 'success' ? 'success' : type === 'warning' ? 'warning' : 'primary'"
+            size="md"
+          >
             {{ confirmText }}
-          </button>
+          </ActionButton>
         </div>
       </div>
     </div>
@@ -59,6 +64,7 @@ import {
   ExclamationTriangleIcon,
   InformationCircleIcon 
 } from '@heroicons/vue/24/outline'
+import ActionButton from '@/components/common/ActionButton.vue'
 import type { ConfirmationModalProps } from '@/types'
 
 const props = withDefaults(defineProps<ConfirmationModalProps>(), {
@@ -95,19 +101,6 @@ const iconColorClass = computed(() => {
       return 'text-yellow-600 dark:text-yellow-400'
     default:
       return 'text-blue-600 dark:text-blue-400'
-  }
-})
-
-const confirmButtonClass = computed(() => {
-  switch (props.type) {
-    case 'success':
-      return 'bg-green-600 hover:bg-green-700 text-white'
-    case 'danger':
-      return 'bg-red-600 hover:bg-red-700 text-white'
-    case 'warning':
-      return 'bg-yellow-600 hover:bg-yellow-700 text-white'
-    default:
-      return 'bg-blue-600 hover:bg-blue-700 text-white'
   }
 })
 

@@ -1,47 +1,27 @@
 <template>
-  <TransitionRoot appear :show="isOpen" as="template">
-    <Dialog as="div" @close="closeModal" class="relative z-50">
-      <TransitionChild
-        as="template"
-        enter="duration-300 ease-out"
-        enter-from="opacity-0"
-        enter-to="opacity-100"
-        leave="duration-200 ease-in"
-        leave-from="opacity-100"
-        leave-to="opacity-0"
+  <ModalWrapper 
+    :is-open="isOpen" 
+    @close="closeModal"
+    max-width="4xl"
+    class="z-50"
+  >
+    <!-- Header -->
+    <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+      <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
+        {{ currentStep === 'availability' ? 'Kiểm tra phòng trống' : 
+           currentStep === 'booking' ? 'Thông tin đặt phòng' :
+           currentStep === 'payment' ? 'Thanh toán' : 'Xác nhận' }}
+      </h3>
+      <button
+        @click="closeModal"
+        class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
       >
-        <div class="fixed inset-0 bg-black bg-opacity-25" />
-      </TransitionChild>
+        <XMarkIcon class="h-6 w-6" />
+      </button>
+    </div>
 
-      <div class="fixed inset-0 overflow-y-auto">
-        <div class="flex min-h-full items-center justify-center p-4 text-center">
-          <TransitionChild
-            as="template"
-            enter="duration-300 ease-out"
-            enter-from="opacity-0 scale-95"
-            enter-to="opacity-100 scale-100"
-            leave="duration-200 ease-in"
-            leave-from="opacity-100 scale-100"
-            leave-to="opacity-0 scale-95"
-          >
-            <DialogPanel class="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 text-left align-middle shadow-xl transition-all">
-              <!-- Header -->
-              <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
-                  {{ currentStep === 'availability' ? 'Kiểm tra phòng trống' : 
-                     currentStep === 'booking' ? 'Thông tin đặt phòng' :
-                     currentStep === 'payment' ? 'Thanh toán' : 'Xác nhận' }}
-                </DialogTitle>
-                <button
-                  @click="closeModal"
-                  class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
-                >
-                  <XMarkIcon class="h-6 w-6" />
-                </button>
-              </div>
-
-              <!-- Content -->
-              <div class="p-6">
+    <!-- Content -->
+    <div class="p-6">
                 <!-- Step 1: Availability Check -->
                 <div v-if="currentStep === 'availability'">
                   <AvailabilityChecker
@@ -278,13 +258,8 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </DialogPanel>
-          </TransitionChild>
-        </div>
-      </div>
-    </Dialog>
-  </TransitionRoot>
+    </div>
+  </ModalWrapper>
 </template>
 
 <script setup lang="ts">
@@ -293,18 +268,12 @@ import { useRouter } from 'vue-router'
 import { useBookingStore } from '@/store/booking'
 import { useAuthStore } from '@/store/auth'
 import {
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  TransitionChild,
-  TransitionRoot,
-} from '@headlessui/vue'
-import {
   XMarkIcon,
   CheckCircleIcon
 } from '@heroicons/vue/24/outline'
 import AvailabilityChecker from './AvailabilityChecker.vue'
 import PaymentForm from './PaymentForm.vue'
+import ModalWrapper from './common/ModalWrapper.vue'
 import type { Booking, Payment, BookingModalProps, BookingModalEmits, BookingData } from '@/types'
 
 const props = defineProps<BookingModalProps>()
