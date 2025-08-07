@@ -147,6 +147,12 @@ const routes = [
     name: 'AdminApproval',
     component: AdminApproval,
     meta: { requiresAuth: true, requiresSuperAdmin: true }
+  },
+  // Catch all 404
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('../pages/NotFound.vue')
   }
 ]
 
