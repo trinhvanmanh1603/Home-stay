@@ -72,58 +72,46 @@
     </div>
 
     <!-- Payment Form for Credit Card -->
-    <div v-if="selectedMethod === 'credit_card'" class="mb-6 p-4 border border-gray-200 dark:border-gray-600 rounded-lg">
+    <FormContainer v-if="selectedMethod === 'credit_card'" class="mb-6">
       <h4 class="font-medium text-gray-900 dark:text-white mb-4">Thông tin thẻ tín dụng</h4>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="md:col-span-2">
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Số thẻ
-          </label>
-          <input
+          <FormInput
             v-model="cardForm.number"
             type="text"
+            label="Số thẻ"
             placeholder="1234 5678 9012 3456"
-            class="input-field"
             @input="formatCardNumber"
           />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Tháng/Năm hết hạn
-          </label>
-          <input
+          <FormInput
             v-model="cardForm.expiry"
             type="text"
+            label="Tháng/Năm hết hạn"
             placeholder="MM/YY"
-            class="input-field"
             @input="formatExpiry"
           />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Mã CVV
-          </label>
-          <input
+          <FormInput
             v-model="cardForm.cvv"
             type="text"
+            label="Mã CVV"
             placeholder="123"
             maxlength="4"
-            class="input-field"
           />
         </div>
         <div class="md:col-span-2">
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Tên chủ thẻ
-          </label>
-          <input
+          <FormInput
             v-model="cardForm.name"
             type="text"
+            label="Tên chủ thẻ"
             placeholder="NGUYEN VAN A"
-            class="input-field"
           />
         </div>
       </div>
-    </div>
+    </FormContainer>
 
     <!-- Bank Transfer Info -->
     <div v-if="selectedMethod === 'bank_transfer'" class="mb-6 p-4 border border-gray-200 dark:border-gray-600 rounded-lg">
@@ -167,17 +155,21 @@
 
     <!-- Action Buttons -->
     <div class="flex space-x-4">
-      <button
+      <ActionButton
         @click="$emit('cancel')"
-        class="flex-1 btn-secondary py-3"
+        variant="secondary"
+        size="lg"
+        class="flex-1"
         :disabled="processing"
       >
         Hủy
-      </button>
-      <button
+      </ActionButton>
+      <ActionButton
         @click="processPayment"
+        variant="primary"
+        size="lg"
+        class="flex-1"
         :disabled="!canPay || processing"
-        class="flex-1 btn-primary py-3 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <span v-if="processing" class="flex items-center justify-center space-x-2">
           <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
@@ -189,7 +181,7 @@
         <span v-else>
           Thanh toán {{ formatPrice(amount) }}
         </span>
-      </button>
+      </ActionButton>
     </div>
   </div>
 </template>
@@ -198,6 +190,9 @@
 import { ref, computed, reactive } from 'vue'
 import { usePaymentStore } from '@/store/payment'
 import { ShieldCheckIcon } from '@heroicons/vue/24/outline'
+import FormInput from '@/components/forms/FormInput.vue'
+import FormContainer from '@/components/forms/FormContainer.vue'
+import ActionButton from '@/components/common/ActionButton.vue'
 import type { Booking, Payment } from '@/types'
 
 interface Props {

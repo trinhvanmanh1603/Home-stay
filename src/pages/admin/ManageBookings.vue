@@ -1,64 +1,29 @@
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Header -->
-    <div class="bg-white dark:bg-gray-800 shadow">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-6">
-          <div>
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-              Quản lý Đặt phòng
-              <span v-if="authStore.user?.brand && !authStore.isSuperAdmin" class="text-lg text-blue-600 dark:text-blue-400 block">
-                {{ authStore.user.brand }}
-              </span>
-            </h1>
-            <p class="text-gray-600 dark:text-gray-400">
-              <span v-if="authStore.user?.brand && !authStore.isSuperAdmin">
-                Quản lý đặt phòng cho homestay thuộc thương hiệu {{ authStore.user.brand }}
-              </span>
-              <span v-else-if="authStore.isSuperAdmin">
-                Giám sát tất cả đặt phòng trong hệ thống (quyền xem và theo dõi)
-              </span>
-              <span v-else>
-                Quản lý tất cả đặt phòng trong hệ thống
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <AdminPageHeader 
+      title="Quản lý Đặt phòng"
+      :brand-description="`Quản lý đặt phòng cho homestay thuộc thương hiệu ${authStore.user?.brand}`"
+      :super-admin-description="'Giám sát tất cả đặt phòng trong hệ thống (quyền xem và theo dõi)'"
+      :admin-description="'Quản lý tất cả đặt phòng trong hệ thống'"
+    />
 
-    <!-- Filters -->
+    <!-- Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <!-- Super Admin Notice -->
-      <div v-if="authStore.isSuperAdmin" class="mb-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-        <div class="flex items-start">
-          <div class="flex-shrink-0">
-            <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-            </svg>
-          </div>
-          <div class="ml-3">
-            <h3 class="text-sm font-medium text-blue-800 dark:text-blue-200">
-              Quyền Super Admin
-            </h3>
-            <div class="mt-2 text-sm text-blue-700 dark:text-blue-300">
-              <p>Bạn đang ở chế độ giám sát. Bạn có thể xem tất cả thông tin nhưng không thể thay đổi trạng thái đặt phòng.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <SuperAdminNotice 
+        message="Bạn đang ở chế độ giám sát. Bạn có thể xem tất cả thông tin nhưng không thể thay đổi trạng thái đặt phòng."
+      />
 
       <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-6">
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Tìm kiếm
-            </label>
-            <input v-model="searchQuery" 
-                   type="text" 
-                   placeholder="Tên khách, homestay..."
-                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-          </div>
+          <FormInput
+            v-model="searchQuery"
+            type="text"
+            label="Tìm kiếm"
+            placeholder="Tên khách, homestay..."
+          />
+          
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Trạng thái
@@ -72,27 +37,27 @@
               <option value="cancelled">Đã hủy</option>
             </select>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Từ ngày
-            </label>
-            <input v-model="fromDate" 
-                   type="date"
-                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Đến ngày
-            </label>
-            <input v-model="toDate" 
-                   type="date"
-                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-          </div>
+          
+          <FormInput
+            v-model="fromDate"
+            type="date"
+            label="Từ ngày"
+          />
+          
+          <FormInput
+            v-model="toDate"
+            type="date"
+            label="Đến ngày"
+          />
+          
           <div class="flex items-end">
-            <button @click="clearFilters" 
-                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <ActionButton
+              @click="clearFilters"
+              variant="secondary"
+              class="w-full"
+            >
               Xóa bộ lọc
-            </button>
+            </ActionButton>
           </div>
         </div>
       </div>
@@ -129,14 +94,13 @@
           </h3>
         </div>
         
-        <div v-if="loading" class="p-8 text-center">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p class="mt-4 text-gray-600 dark:text-gray-400">Đang tải...</p>
-        </div>
+        <LoadingSpinner v-if="loading" message="Đang tải..." />
 
-        <div v-else-if="filteredBookings.length === 0" class="p-8 text-center">
-          <p class="text-gray-600 dark:text-gray-400">Không tìm thấy đặt phòng nào</p>
-        </div>
+        <EmptyState 
+          v-else-if="filteredBookings.length === 0"
+          title="Không tìm thấy đặt phòng nào"
+          description="Hãy thử thay đổi bộ lọc tìm kiếm để xem kết quả khác"
+        />
 
         <div v-else class="divide-y divide-gray-200 dark:divide-gray-700">
           <div v-for="booking in paginatedBookings" :key="booking.id" 
@@ -152,10 +116,10 @@
                       Mã đặt phòng: #{{ booking.id.slice(-8).toUpperCase() }}
                     </p>
                   </div>
-                  <span :class="getStatusBadgeClass(booking.status)" 
-                        class="px-3 py-1 text-sm rounded-full">
-                    {{ getStatusText(booking.status) }}
-                  </span>
+                  <StatusBadge 
+                    :status="booking.status" 
+                    :label="getStatusText(booking.status)"
+                  />
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -217,50 +181,68 @@
                 </div>
 
                 <div class="flex justify-end space-x-2">
-                  <button @click="viewDetails(booking)" 
-                          class="px-3 py-1 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors">
-                    <EyeIcon class="w-4 h-4 inline mr-1" />
+                  <ActionButton
+                    @click="viewDetails(booking)"
+                    variant="secondary"
+                    size="sm"
+                    icon="eye"
+                  >
                     Xem chi tiết
-                  </button>
+                  </ActionButton>
                   
                   <!-- Chỉ admin có quyền chỉnh sửa booking -->
-                  <button v-if="booking.status === 'pending' && authStore.canEditBookings" 
-                          @click="confirmBooking(booking.id)"
-                          class="px-3 py-1 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors">
-                    <CheckIcon class="w-4 h-4 inline mr-1" />
+                  <ActionButton
+                    v-if="booking.status === 'pending' && authStore.canEditBookings"
+                    @click="confirmBooking(booking.id)"
+                    variant="success"
+                    size="sm"
+                    icon="check"
+                  >
                     Xác nhận
-                  </button>
+                  </ActionButton>
                   
                   <!-- Chỉ admin có quyền hủy booking -->
-                  <button v-if="['pending', 'confirmed'].includes(booking.status) && authStore.canEditBookings" 
-                          @click="cancelBooking(booking.id)"
-                          class="px-3 py-1 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                    <XMarkIcon class="w-4 h-4 inline mr-1" />
+                  <ActionButton
+                    v-if="['pending', 'confirmed'].includes(booking.status) && authStore.canEditBookings"
+                    @click="cancelBooking(booking.id)"
+                    variant="danger"
+                    size="sm"
+                    icon="x"
+                  >
                     Hủy
-                  </button>
+                  </ActionButton>
                   
                   <!-- Chỉ admin có quyền hoàn thành booking -->
-                  <button v-if="booking.status === 'confirmed' && isPastCheckOut(booking.checkOut) && authStore.canEditBookings" 
-                          @click="completeBooking(booking.id)"
-                          class="px-3 py-1 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-colors">
-                    <CheckCircleIcon class="w-4 h-4 inline mr-1" />
+                  <ActionButton
+                    v-if="booking.status === 'confirmed' && isPastCheckOut(booking.checkOut) && authStore.canEditBookings"
+                    @click="completeBooking(booking.id)"
+                    variant="primary"
+                    size="sm"
+                    icon="check-circle"
+                  >
                     Hoàn thành
-                  </button>
+                  </ActionButton>
                   
                   <!-- Chỉ admin có quyền xóa booking đã hủy -->
-                  <button v-if="booking.status === 'cancelled' && authStore.canEditBookings && !authStore.isSuperAdmin" 
-                          @click="deleteBooking(booking.id)"
-                          class="px-3 py-1 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                    <TrashIcon class="w-4 h-4 inline mr-1" />
+                  <ActionButton
+                    v-if="booking.status === 'cancelled' && authStore.canEditBookings && !authStore.isSuperAdmin"
+                    @click="deleteBooking(booking.id)"
+                    variant="danger"
+                    size="sm"
+                    icon="trash"
+                  >
                     Xóa
-                  </button>
+                  </ActionButton>
                   
                   <!-- Nút thêm comment/phản hồi -->
-                  <button @click="openCommentModal(booking)"
-                          class="px-3 py-1 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors">
-                    <ChatBubbleLeftIcon class="w-4 h-4 inline mr-1" />
+                  <ActionButton
+                    @click="openCommentModal(booking)"
+                    variant="secondary"
+                    size="sm"
+                    icon="chat"
+                  >
                     {{ booking.adminComments?.length ? 'Xem ghi chú' : 'Thêm ghi chú' }}
-                  </button>
+                  </ActionButton>
                 </div>
               </div>
             </div>
@@ -425,16 +407,16 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/store/auth'
-import { 
-  EyeIcon,
-  CheckIcon,
-  XMarkIcon,
-  CheckCircleIcon,
-  TrashIcon,
-  ChatBubbleLeftIcon
-} from '@heroicons/vue/24/outline'
+import { XMarkIcon } from '@heroicons/vue/24/outline'
 import axios from 'axios'
 import ConfirmationModal from '@/components/ConfirmationModal.vue'
+import AdminPageHeader from '@/components/admin/AdminPageHeader.vue'
+import SuperAdminNotice from '@/components/admin/SuperAdminNotice.vue'
+import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
+import EmptyState from '@/components/common/EmptyState.vue'
+import StatusBadge from '@/components/common/StatusBadge.vue'
+import ActionButton from '@/components/common/ActionButton.vue'
+import FormInput from '@/components/forms/FormInput.vue'
 import type { Booking, AdminComment } from '@/types'
 
 const router = useRouter()
@@ -620,33 +602,18 @@ const formatDateTime = (dateString: string): string => {
   return new Date(dateString).toLocaleString('vi-VN')
 }
 
-const getStatusBadgeClass = (status: string): string => {
-  switch (status) {
-    case 'pending':
-      return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
-    case 'confirmed':
-      return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
-    case 'completed':
-      return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400'
-    case 'cancelled':
-      return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'
-    default:
-      return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'
-  }
-}
-
 const getStatusText = (status: string): string => {
   switch (status) {
-    case 'pending':
-      return 'Chờ xác nhận'
     case 'confirmed':
       return 'Đã xác nhận'
-    case 'completed':
-      return 'Hoàn thành'
+    case 'pending':
+      return 'Chờ xác nhận'
     case 'cancelled':
       return 'Đã hủy'
+    case 'completed':
+      return 'Hoàn thành'
     default:
-      return status
+      return 'Không xác định'
   }
 }
 

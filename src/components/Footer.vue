@@ -135,9 +135,13 @@
               placeholder="Nhập email của bạn"
               class="flex-1 px-4 py-2 bg-gray-800 border border-gray-600 rounded-l-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent"
             />
-            <button class="px-6 py-2 bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white rounded-r-lg transition-all duration-200 transform hover:scale-105">
-              <span class="text-sm font-medium">Đăng ký</span>
-            </button>
+            <ActionButton
+              variant="primary"
+              size="md"
+              class="rounded-l-none"
+            >
+              Đăng ký
+            </ActionButton>
           </div>
         </div>
       </div>
@@ -162,6 +166,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
+import ActionButton from '@/components/common/ActionButton.vue'
 
 const currentYear = computed(() => new Date().getFullYear())
 </script>

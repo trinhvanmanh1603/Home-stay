@@ -2,7 +2,7 @@
   <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
     <!-- Image -->
     <div class="relative h-48">
-      <img
+      <ImagePlaceholder
         :src="stay.images[0]"
         :alt="stay.title"
         class="w-full h-full object-cover"
@@ -65,12 +65,13 @@
 
       <!-- Price and CTA -->
       <div class="flex justify-between items-center">
-        <div>
-          <span class="text-xl font-bold text-gray-900 dark:text-white">
-            {{ formatPrice(stay.price) }}
-          </span>
-          <span class="text-gray-600 dark:text-gray-400">/đêm</span>
-        </div>
+        <PriceDisplay 
+          :amount="stay.price"
+          variant="primary"
+          size="lg"
+          class="text-xl font-bold"
+        />
+        <div class="text-gray-600 dark:text-gray-400 text-sm">/đêm</div>
         <RouterLink
           :to="`/stay/${stay.id}`"
           class="btn-primary text-sm px-4 py-2"
@@ -88,6 +89,8 @@ import { RouterLink } from 'vue-router'
 import { MapPinIcon, UserGroupIcon, BuildingOfficeIcon } from '@heroicons/vue/24/outline'
 import { useRatings } from '@/composables/useRatings'
 import RatingDisplay from '@/components/RatingDisplay.vue'
+import ImagePlaceholder from '@/components/common/ImagePlaceholder.vue'
+import PriceDisplay from '@/components/common/PriceDisplay.vue'
 import type { StayCardProps } from '@/types'
 
 const props = defineProps<StayCardProps>()
@@ -96,13 +99,6 @@ const { loadReviews, getStayRating } = useRatings()
 
 // Tính toán rating thực tế từ reviews
 const actualRating = computed(() => getStayRating(props.stay.id))
-
-const formatPrice = (price: number): string => {
-  return new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND'
-  }).format(price)
-}
 
 onMounted(() => {
   loadReviews()

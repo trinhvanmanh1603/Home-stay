@@ -53,25 +53,28 @@
           <!-- Auth buttons for desktop -->
           <div class="hidden md:flex items-center space-x-3">
             <div v-if="!authStore.isAuthenticated" class="flex items-center space-x-2">
-              <RouterLink 
+              <ActionButton
                 to="/login"
-                class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                variant="ghost"
+                size="sm"
               >
                 Đăng nhập
-              </RouterLink>
-              <RouterLink 
+              </ActionButton>
+              <ActionButton
                 to="/register"
-                class="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                variant="primary"
+                size="sm"
               >
                 Đăng ký
-              </RouterLink>
-              <RouterLink 
+              </ActionButton>
+              <ActionButton
                 to="/admin-register"
-                class="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center space-x-1"
+                variant="secondary"
+                size="sm"
+                icon="shield"
               >
-                <span>🛡️</span>
-                <span>Admin</span>
-              </RouterLink>
+                Admin
+              </ActionButton>
             </div>
             <div v-else class="flex items-center space-x-3">
               <!-- Admin quick toggle -->
@@ -165,57 +168,36 @@
                     {{ authStore.isAdmin ? (authStore.isSuperAdmin ? 'Super Admin' : 'Admin') : 'Khách hàng' }}
                   </p>
                 </div>
-                <button
+                <ActionButton
                   @click="handleLogout"
-                  class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 p-1 rounded transition-colors"
+                  variant="ghost"
+                  size="sm"
+                  icon="logout"
                   title="Đăng xuất"
-                >
-                  <ArrowRightOnRectangleIcon class="w-5 h-5" />
-                </button>
+                />
               </div>
             </div>
           </div>
 
           <!-- Dark mode toggle -->
-          <button
+          <ActionButton
             @click="themeStore.toggleTheme"
-            class="p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group relative"
-            aria-label="Toggle dark mode"
-          >
-            <SunIcon v-if="themeStore.isDark" class="h-5 w-5 text-amber-500 group-hover:text-amber-400 transition-colors" />
-            <MoonIcon v-else class="h-5 w-5 text-gray-600 group-hover:text-gray-800 dark:text-gray-300 dark:group-hover:text-gray-100 transition-colors" />
-            <!-- Subtle ring animation -->
-            <div class="absolute inset-0 rounded-lg ring-2 ring-transparent group-hover:ring-gray-200 dark:group-hover:ring-gray-700 transition-all duration-200"></div>
-          </button>
+            variant="ghost"
+            size="md"
+            :icon="themeStore.isDark ? 'sun' : 'moon'"
+            title="Toggle dark mode"
+            class="relative"
+          />
 
           <!-- Mobile menu button -->
-          <button
+          <ActionButton
             @click="mobileMenuOpen = !mobileMenuOpen"
-            class="md:hidden p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 relative z-40"
-            aria-label="Toggle menu"
-            :aria-expanded="mobileMenuOpen"
-          >
-            <div class="relative w-6 h-6">
-              <span 
-                :class="[
-                  'absolute top-1 left-0 w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transform transition-all duration-300',
-                  mobileMenuOpen ? 'rotate-45 translate-y-2' : ''
-                ]"
-              ></span>
-              <span 
-                :class="[
-                  'absolute top-2.5 left-0 w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300',
-                  mobileMenuOpen ? 'opacity-0' : ''
-                ]"
-              ></span>
-              <span 
-                :class="[
-                  'absolute top-4 left-0 w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transform transition-all duration-300',
-                  mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
-                ]"
-              ></span>
-            </div>
-          </button>
+            variant="ghost"
+            size="md"
+            :icon="mobileMenuOpen ? 'x-mark' : 'bars-3'"
+            class="md:hidden relative z-40"
+            title="Toggle menu"
+          />
         </div>
       </div>
 
@@ -299,34 +281,40 @@
                   </div>
                   <div class="space-y-2">
                     <div class="px-3">
-                      <RouterLink 
+                      <ActionButton
                         to="/login"
                         @click="mobileMenuOpen = false"
-                        class="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white py-3 px-4 rounded-lg text-center font-medium transition-all duration-200 hover:shadow-lg flex items-center justify-center space-x-2"
+                        variant="primary"
+                        size="md"
+                        icon="user"
+                        class="w-full justify-center"
                       >
-                        <span>👤</span>
-                        <span>Đăng nhập</span>
-                      </RouterLink>
+                        Đăng nhập
+                      </ActionButton>
                     </div>
                     <div class="px-3">
-                      <RouterLink 
+                      <ActionButton
                         to="/register"
                         @click="mobileMenuOpen = false"
-                        class="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-4 rounded-lg text-center font-medium transition-all duration-200 hover:shadow-lg flex items-center justify-center space-x-2"
+                        variant="success"
+                        size="md"
+                        icon="sparkles"
+                        class="w-full justify-center"
                       >
-                        <span>✨</span>
-                        <span>Đăng ký ngay</span>
-                      </RouterLink>
+                        Đăng ký ngay
+                      </ActionButton>
                     </div>
                     <div class="px-3 mt-2">
-                      <RouterLink 
+                      <ActionButton
                         to="/admin-register"
                         @click="mobileMenuOpen = false"
-                        class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-2 px-4 rounded-lg text-center text-sm font-medium transition-all duration-200 hover:shadow-lg flex items-center justify-center space-x-1"
+                        variant="secondary"
+                        size="sm"
+                        icon="shield"
+                        class="w-full justify-center"
                       >
-                        <span>🛡️</span>
-                        <span>Đăng ký Admin</span>
-                      </RouterLink>
+                        Đăng ký Admin
+                      </ActionButton>
                     </div>
                   </div>
                 </div>
@@ -348,13 +336,15 @@
                     </div>
                   </div>
                   <div class="px-3">
-                    <button
+                    <ActionButton
                       @click="handleLogout"
-                      class="w-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 py-2 px-4 rounded-lg text-center font-medium transition-all duration-200 hover:bg-red-100 dark:hover:bg-red-900/30 flex items-center justify-center space-x-2"
+                      variant="danger"
+                      size="md"
+                      icon="logout"
+                      class="w-full justify-center"
                     >
-                      <ArrowRightOnRectangleIcon class="w-4 h-4" />
-                      <span>Đăng xuất</span>
-                    </button>
+                      Đăng xuất
+                    </ActionButton>
                   </div>
                 </div>
               </div>
@@ -383,17 +373,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineComponent } from 'vue'
+import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useThemeStore } from '@/store/theme'
 import { useAuthStore } from '@/store/auth'
 import ConfirmationModal from '@/components/ConfirmationModal.vue'
-import { 
-  SunIcon, 
-  MoonIcon,
-  ArrowRightOnRectangleIcon,
-  ChevronDownIcon
-} from '@heroicons/vue/24/outline'
+import ActionButton from '@/components/common/ActionButton.vue'
+import MobileNavLink from '@/components/common/MobileNavLink.vue'
+import { ChevronDownIcon } from '@heroicons/vue/24/outline'
 
 const themeStore = useThemeStore()
 const authStore = useAuthStore()
@@ -412,23 +399,7 @@ const confirmLogout = () => {
   showLogoutModal.value = false
 }
 
-// Define mobile nav component
-const MobileNavLink = defineComponent({
-  props: ['to', 'icon', 'isAdmin'],
-  template: `
-    <RouterLink :to="to"
-                :class="[
-                  'flex items-center space-x-3 px-3 py-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group',
-                  isAdmin ? 'ml-2' : ''
-                ]">
-      <span class="text-base group-hover:scale-110 transition-transform">{{ icon }}</span>
-      <span class="font-medium"><slot /></span>
-    </RouterLink>
-  `
-})
-
 onMounted(() => {
-  // Check authentication on mount
   authStore.checkAuth()
 })
 </script>

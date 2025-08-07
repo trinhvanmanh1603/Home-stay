@@ -32,11 +32,11 @@
               Thông tin homestay
             </h3>
             <div class="flex items-start space-x-4">
-              <img 
+              <ImagePlaceholder
                 :src="booking.stay.images[0]" 
                 :alt="booking.stay.title"
                 class="w-24 h-24 object-cover rounded-lg"
-              >
+              />
               <div>
                 <h4 class="font-medium text-gray-900 dark:text-white">
                   {{ booking.stay.title }}
@@ -121,35 +121,23 @@
               Thông tin thanh toán
             </h3>
             <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <dl class="space-y-2">
-                <div class="flex justify-between">
-                  <dt class="text-sm text-gray-600 dark:text-gray-400">Tổng tiền:</dt>
-                  <dd class="text-sm font-medium text-gray-900 dark:text-white">
-                    {{ formatCurrency(booking.totalPrice) }}
-                  </dd>
-                </div>
-                <div class="flex justify-between">
-                  <dt class="text-sm text-gray-600 dark:text-gray-400">Đặt cọc (30%):</dt>
-                  <dd class="text-sm font-medium text-gray-900 dark:text-white">
-                    {{ formatCurrency(booking.depositAmount) }}
-                  </dd>
-                </div>
-                <div class="flex justify-between">
-                  <dt class="text-sm text-gray-600 dark:text-gray-400">Còn lại:</dt>
-                  <dd class="text-sm font-medium text-gray-900 dark:text-white">
-                    {{ formatCurrency(booking.remainingAmount) }}
-                  </dd>
-                </div>
-                <div class="flex justify-between pt-2 border-t border-gray-200 dark:border-gray-700">
-                  <dt class="text-sm font-medium text-gray-900 dark:text-white">Trạng thái:</dt>
-                  <dd>
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                          :class="getStatusClass(booking.paymentStatus)">
-                      {{ getStatusText(booking.paymentStatus) }}
-                    </span>
-                  </dd>
-                </div>
-              </dl>
+              <BookingSummary 
+                :nights="calculateNights()"
+                :price-per-night="booking.stay?.price || 0"
+                :total-price="booking.totalPrice"
+                :deposit-amount="booking.depositAmount"
+                :remaining-amount="booking.remainingAmount"
+                show-details
+              />
+              <div class="flex justify-between pt-2 border-t border-gray-200 dark:border-gray-700 mt-4">
+                <dt class="text-sm font-medium text-gray-900 dark:text-white">Trạng thái:</dt>
+                <dd>
+                  <StatusBadge 
+                    :status="booking.paymentStatus"
+                    :label="getStatusText(booking.paymentStatus)"
+                  />
+                </dd>
+              </div>
             </div>
           </div>
 
@@ -214,6 +202,9 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useBookingStore } from '@/store/booking'
 import { CheckCircleIcon, StarIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/solid'
+import ImagePlaceholder from '@/components/common/ImagePlaceholder.vue'
+import StatusBadge from '@/components/common/StatusBadge.vue'
+import BookingSummary from '@/components/common/BookingSummary.vue'
 import type { Booking } from '@/types'
 
 const route = useRoute()
@@ -233,13 +224,6 @@ const formatDate = (dateString: string): string => {
   })
 }
 
-const formatCurrency = (amount: number): string => {
-  return new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND'
-  }).format(amount)
-}
-
 const calculateNights = (): number => {
   if (!booking.value) return 0
   const checkIn = new Date(booking.value.checkIn)
@@ -248,27 +232,16 @@ const calculateNights = (): number => {
   return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 }
 
-const getStatusClass = (status: string): string => {
-  switch (status) {
-    case 'paid':
-      return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
-    case 'partial':
-      return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
-    case 'unpaid':
-      return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-    default:
-      return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'
-  }
-}
-
 const getStatusText = (status: string): string => {
   switch (status) {
-    case 'paid':
-      return 'Đã thanh toán'
-    case 'partial':
+    case 'fully_paid':
+      return 'Đã thanh toán đầy đủ'
+    case 'deposit_paid':
       return 'Đã đặt cọc'
     case 'unpaid':
       return 'Chưa thanh toán'
+    case 'refunded':
+      return 'Đã hoàn tiền'
     default:
       return 'Không xác định'
   }
