@@ -28,7 +28,7 @@
     </div>
 
     <!-- Booking Details -->
-    <div class="space-y-3">
+    <div class="space-y-2">
       <!-- Check-in/Check-out -->
       <div v-if="checkIn && checkOut" class="grid grid-cols-2 gap-4">
         <InfoCard
@@ -48,7 +48,7 @@
       </div>
 
       <!-- Guests and Nights -->
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 gap-4">
         <InfoCard
           v-if="guests"
           icon="user"
@@ -91,7 +91,7 @@
       </div>
 
       <!-- Total Price -->
-      <div v-if="totalPrice" class="border-t border-gray-200 dark:border-gray-700 pt-3">
+      <div v-if="totalPrice" class="border-t border-gray-200 dark:border-gray-700">
         <div class="flex justify-between items-center">
           <span class="font-semibold text-gray-900 dark:text-white">Tổng tiền:</span>
           <PriceDisplay :amount="totalPrice || 0" size="lg" variant="primary" />

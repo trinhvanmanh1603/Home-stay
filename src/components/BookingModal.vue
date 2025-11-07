@@ -1,8 +1,8 @@
 <template>
   <ModalWrapper 
     :is-open="isOpen" 
+    :size="currentStep === 'booking' ? 'full' : 'md'"
     @close="closeModal"
-    max-width="4xl"
     class="z-50"
   >
     <!-- Header -->
@@ -405,6 +405,8 @@ const handleCreateBooking = async () => {
     const booking = await bookingStore.createBooking({
       stayId: bookingData.stayId || props.stay.id,
       stayTitle: props.stay.title,
+      // Link booking to current user so it appears in "My Bookings"
+      userId: authStore.user?.id || '',
       guestInfo,
       checkIn: bookingData.checkIn,
       checkOut: bookingData.checkOut,

@@ -80,7 +80,7 @@
               <!-- Admin quick toggle -->
               <div v-if="authStore.isAdmin" class="relative admin-dropdown">
                 <button 
-                  @click="adminQuickMenu = !adminQuickMenu; console.log('Admin menu toggled:', adminQuickMenu)"
+                  @click="adminQuickMenu = !adminQuickMenu"
                   class="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 group border border-transparent hover:border-primary-200 dark:hover:border-primary-800"
                 >
                   <span class="flex items-center space-x-1">

@@ -83,7 +83,6 @@ export function useStayDetail() {
   }
 
   const handleBookingCreated = (booking: Booking) => {
-    console.log('Booking created:', booking)
     router.push(`/booking-detail/${booking.id}`)
   }
 

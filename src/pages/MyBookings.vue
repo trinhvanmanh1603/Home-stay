@@ -114,7 +114,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useMyBookings } from '@/composables/useMyBookings'
-import { useAuthStore } from '@/store/auth'
 
 // Components
 import FilterTabs from '@/components/common/FilterTabs.vue'
@@ -124,7 +123,6 @@ import BookingCard from '@/components/booking/BookingCard.vue'
 import StayPagination from '@/components/stay/StayPagination.vue'
 
 // Stores
-const authStore = useAuthStore()
 
 // Composable
 const {
@@ -157,8 +155,6 @@ const {
 } = useMyBookings()
 
 onMounted(() => {
-  console.log('MyBookings mounted - User:', authStore.user)
-  console.log('MyBookings mounted - Is authenticated:', authStore.isAuthenticated)
   loadBookings()
 })
 </script>

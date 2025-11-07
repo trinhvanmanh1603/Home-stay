@@ -926,10 +926,6 @@ const addComment = async () => {
 }
 
 onMounted(() => {
-  console.log('ManageBookings - User role:', authStore.user?.role)
-  console.log('ManageBookings - Super admin:', authStore.user?.super_admin)
-  console.log('ManageBookings - Can edit bookings:', authStore.canEditBookings)
-  
   loadBookings()
 })
 </script>

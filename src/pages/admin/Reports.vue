@@ -423,7 +423,6 @@ const formatCurrency = (amount: number): string => {
 
 const exportReport = () => {
   // TODO: Implement export functionality
-  console.log('Export report for period:', selectedPeriod.value)
   openConfirmationModal({
     type: 'info',
     title: 'Tính năng đang phát triển',

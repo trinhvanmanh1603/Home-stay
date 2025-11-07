@@ -1,9 +1,9 @@
 <template>
   <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md sticky top-24">
-    <div class="mb-4">
-      <PriceDisplay 
-        :amount="stay.price" 
-        variant="primary" 
+    <div class="mb-4 inline-flex items-center gap-1">
+      <PriceDisplay
+        :amount="stay.price"
+        variant="primary"
         size="xl"
         class="mb-2"
       />

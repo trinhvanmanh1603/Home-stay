@@ -49,13 +49,11 @@ const formattedPrice = computed(() => {
   const amount = Number(props.amount)
   
   if (props.compact && amount >= 1000000) {
-    // Format as millions for Vietnamese currency
     const millions = amount / 1000000
     return `${millions.toFixed(1).replace('.0', '')}tr ${props.showCurrency ? 'VND' : ''}`
   }
   
   if (props.compact && amount >= 1000) {
-    // Format as thousands
     const thousands = amount / 1000
     return `${thousands.toFixed(1).replace('.0', '')}k ${props.showCurrency ? 'VND' : ''}`
   }
@@ -68,7 +66,6 @@ const formattedPrice = computed(() => {
       maximumFractionDigits: 0
     }).format(amount)
   } catch (error) {
-    // Fallback if Intl.NumberFormat fails
     return `${amount.toLocaleString()} ${props.showCurrency ? props.currency : ''}`
   }
 })

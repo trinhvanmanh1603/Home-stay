@@ -18,19 +18,20 @@ export function useMyBookings() {
   // Computed
   const userBookings = computed(() => {
     if (!authStore.user?.id) {
-      console.log('❌ No user ID found')
       return []
     }
     
     const filtered = bookingStore.bookings.filter(booking => {
-      const match = booking.userId === authStore.user?.id
+      // Match by userId when available. Fall back to guest email for older bookings
+      const matchById = booking.userId && booking.userId === authStore.user?.id
+      const matchByEmail = booking.guestInfo?.email && booking.guestInfo.email === authStore.user?.email
+      const match = Boolean(matchById || matchByEmail)
       if (!match) {
-        console.log(`🔍 Booking ${booking.id} userId: ${booking.userId} vs current user: ${authStore.user?.id}`)
+        // no match for this booking
       }
       return match
     })
     
-    console.log(`✅ Found ${filtered.length} bookings for user ${authStore.user?.id}`)
     return filtered
   })
 
@@ -110,10 +111,7 @@ export function useMyBookings() {
     try {
       loading.value = true
       await bookingStore.getBookings()
-      console.log('All bookings loaded:', bookingStore.bookings.length)
-      console.log('Current user ID:', authStore.user?.id)
-      console.log('User bookings count:', userBookings.value.length)
-      console.log('User bookings:', userBookings.value)
+      // bookings loaded
     } catch (error) {
       console.error('Error loading bookings:', error)
     } finally {
