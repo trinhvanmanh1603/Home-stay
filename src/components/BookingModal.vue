@@ -180,6 +180,27 @@
                             </label>
                           </div>
                         </div>
+
+                        <!-- Payment method selection (UI only) -->
+                        <div class="mt-4">
+                          <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phương thức thanh toán</p>
+                          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <label
+                              v-for="m in paymentMethods"
+                              :key="m.id"
+                              class="cursor-pointer"
+                            >
+                              <input type="radio" class="sr-only" :value="m.id" v-model="paymentMethod" />
+                              <div :class="['border rounded-lg p-3 flex items-start space-x-3', paymentMethod === m.id ? 'border-primary-500' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800']">
+                                <component :is="m.icon" class="h-6 w-6 text-primary-600 mt-1" />
+                                <div>
+                                  <div class="font-medium text-gray-900 dark:text-white">{{ m.label }}</div>
+                                  <div class="text-sm text-gray-600 dark:text-gray-400">{{ m.description }}</div>
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                        </div>
                         
                         <hr class="border-gray-200 dark:border-gray-600">
                         <div class="flex justify-between">
@@ -263,14 +284,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, watch } from 'vue'
+import { ref, computed, reactive, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useBookingStore } from '@/store/booking'
 import { useAuthStore } from '@/store/auth'
 import {
   XMarkIcon,
-  CheckCircleIcon
+  CheckCircleIcon,
+  CreditCardIcon,
+  BanknotesIcon,
+  QrCodeIcon
 } from '@heroicons/vue/24/outline'
+import { siteService } from '@/services'
 import AvailabilityChecker from './AvailabilityChecker.vue'
 import PaymentForm from './PaymentForm.vue'
 import ModalWrapper from './common/ModalWrapper.vue'
@@ -308,6 +333,40 @@ const guestInfo = reactive({
 
 const specialRequests = ref<string>('')
 const paymentPercentage = ref<50 | 100>(50) // Thêm tùy chọn thanh toán
+
+// Payment method UI (UI only for now)
+const paymentMethod = ref<string>('card')
+const paymentMethods = ref<Array<any>>([])
+
+// Load payment methods from mock API (fallback to built-in if API unavailable)
+onMounted(async () => {
+  try {
+    const methods = await siteService.getPaymentMethods()
+    // map icon name -> actual component where possible
+    const iconMap: Record<string, any> = {
+      CreditCardIcon,
+      QrCodeIcon
+    }
+    if (Array.isArray(methods) && methods.length > 0) {
+      paymentMethods.value = methods.map((m: any) => ({
+        ...m,
+        icon: iconMap[m.icon] || BanknotesIcon
+      }))
+    } else {
+      // fallback to default static list
+      paymentMethods.value = [
+        { id: 'card', label: 'Thẻ tín dụng / Ghi nợ', description: 'Thanh toán nhanh bằng thẻ', icon: CreditCardIcon },
+        { id: 'qr', label: 'QR / Ví điện tử', description: 'Thanh toán qua QR code (MoMo, ZaloPay...)', icon: QrCodeIcon },
+      ]
+    }
+  } catch (e) {
+    // fallback to default static list
+    paymentMethods.value = [
+      { id: 'card', label: 'Thẻ tín dụng / Ghi nợ', description: 'Thanh toán nhanh bằng thẻ', icon: CreditCardIcon },
+      { id: 'qr', label: 'QR / Ví điện tử', description: 'Thanh toán qua QR code (MoMo, ZaloPay...)', icon: QrCodeIcon },
+    ]
+  }
+})
 
 // Tự động điền thông tin từ user đã đăng nhập
 const fillUserInfo = () => {

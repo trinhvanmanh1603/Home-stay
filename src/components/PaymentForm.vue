@@ -187,8 +187,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive } from 'vue'
+import { ref, computed, reactive, onMounted } from 'vue'
 import { usePaymentStore } from '@/store/payment'
+import { siteService } from '@/services'
 import { ShieldCheckIcon } from '@heroicons/vue/24/outline'
 import FormInput from '@/components/forms/FormInput.vue'
 import FormContainer from '@/components/forms/FormContainer.vue'
@@ -221,7 +222,30 @@ const cardForm = reactive({
   name: ''
 })
 
-const paymentMethods = paymentStore.getPaymentMethods()
+const paymentMethods = ref<Array<any>>([])
+
+// Try to load payment methods from mock API; fallback to paymentService static list from store
+onMounted(async () => {
+  try {
+    const remote = await siteService.getPaymentMethods()
+    if (Array.isArray(remote) && remote.length > 0) {
+      // map remote shape (label -> name)
+      paymentMethods.value = remote.map((m: any) => ({
+        id: m.id,
+        name: m.label || m.name || m.id,
+        description: m.description || '',
+        processingTime: m.processingTime || 'Tức thì'
+      }))
+      return
+    }
+  } catch (e) {
+    // ignore and fallback
+  }
+
+  // fallback to store/static methods
+  const storeMethods = paymentStore.getPaymentMethods()
+  paymentMethods.value = Array.isArray(storeMethods) ? storeMethods : []
+})
 
 const formatPrice = (price: number): string => {
   return new Intl.NumberFormat('vi-VN', {

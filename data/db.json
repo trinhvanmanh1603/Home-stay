@@ -675,6 +675,99 @@
       "depositAmount": 2475000,
       "remainingAmount": 2475000,
       "paymentHistory": []
+    },
+    {
+      "id": "1754581231839",
+      "stayId": "1",
+      "stayTitle": "Villa The Ocean View - Nha Trang",
+      "guestInfo": {
+        "firstName": "Trịnh Văn",
+        "lastName": "Đăng vũ",
+        "email": "mmmmanh345111@gmail.com",
+        "phone": "08899095662"
+      },
+      "checkIn": "2025-08-08",
+      "checkOut": "2025-08-21",
+      "nights": 13,
+      "guests": 4,
+      "totalPrice": 21450000,
+      "specialRequests": "",
+      "createdAt": "2025-08-07T15:40:31.839Z",
+      "status": "pending",
+      "paymentStatus": "fully_paid",
+      "depositAmount": 21450000,
+      "remainingAmount": 0,
+      "paymentHistory": []
+    },
+    {
+      "id": "1762529469927",
+      "stayId": "2",
+      "stayTitle": "Căn hộ hiện đại giữa lòng Sài Gòn",
+      "guestInfo": {
+        "firstName": "Thu Phương",
+        "lastName": "Hoàng Thị ",
+        "email": "phuong@gmail.com",
+        "phone": "0233666878"
+      },
+      "checkIn": "2025-11-07",
+      "checkOut": "2025-11-13",
+      "nights": 6,
+      "guests": 1,
+      "totalPrice": 5280000,
+      "specialRequests": "",
+      "createdAt": "2025-11-07T15:31:09.927Z",
+      "status": "pending",
+      "paymentStatus": "deposit_paid",
+      "depositAmount": 2640000,
+      "remainingAmount": 2640000,
+      "paymentHistory": []
+    },
+    {
+      "id": "1762529670334",
+      "stayId": "1",
+      "stayTitle": "Villa The Ocean View - Nha Trang",
+      "guestInfo": {
+        "firstName": "Thu Phương",
+        "lastName": "Hoàng Thị ",
+        "email": "phuong@gmail.com",
+        "phone": "0233666878"
+      },
+      "checkIn": "2025-11-07",
+      "checkOut": "2025-11-20",
+      "nights": 13,
+      "guests": 1,
+      "totalPrice": 21450000,
+      "specialRequests": "",
+      "createdAt": "2025-11-07T15:34:30.334Z",
+      "status": "pending",
+      "paymentStatus": "fully_paid",
+      "depositAmount": 21450000,
+      "remainingAmount": 0,
+      "paymentHistory": []
+    },
+    {
+      "id": "1762531333826",
+      "stayId": "3",
+      "stayTitle": "Nhà gỗ truyền thống - Sa Pa",
+      "userId": "1752351397917",
+      "guestInfo": {
+        "firstName": "Thu Phương",
+        "lastName": "Hoàng Thị ",
+        "email": "phuong@gmail.com",
+        "phone": "0233666878"
+      },
+      "checkIn": "2025-11-14",
+      "checkOut": "2025-11-19",
+      "nights": 5,
+      "guests": 1,
+      "totalPrice": 3300000,
+      "specialRequests": "",
+      "createdAt": "2025-11-07T16:02:13.826Z",
+      "status": "pending",
+      "paymentStatus": "fully_paid",
+      "depositAmount": 3300000,
+      "remainingAmount": 0,
+      "paymentHistory": []
     }
   ],
   "reviews": [
@@ -784,6 +877,16 @@
       "verified": true,
       "role": "guest",
       "createdAt": "2025-07-12T20:16:37.917Z"
+    },
+    {
+      "id": "1754581180202",
+      "email": "mmmmanh345111@gmail.com",
+      "firstName": "Trịnh Văn",
+      "lastName": "Đăng vũ",
+      "phone": "08899095662",
+      "verified": false,
+      "role": "guest",
+      "createdAt": "2025-08-07T15:39:40.202Z"
     }
   ],
   "admin-requests": [
@@ -901,6 +1004,43 @@
       },
       "reviewedAt": "2025-07-13T08:18:57.676Z",
       "reviewedBy": "mmmmanh345@gmail.com"
+    }
+  ],
+  "paymentMethods": [
+    {
+      "id": "card",
+      "label": "Thẻ tín dụng / Ghi nợ",
+      "description": "Thanh toán nhanh bằng thẻ",
+      "icon": "CreditCardIcon"
+    },
+    {
+      "id": "qr",
+      "label": "QR / Ví điện tử",
+      "description": "Thanh toán qua QR code (MoMo, ZaloPay...)",
+      "icon": "QrCodeIcon"
+    }
+  ],
+  "features": [
+    {
+      "id": "f_home",
+      "title": "Trải nghiệm như ở nhà",
+      "description": "Cảm nhận không gian ấm cúng và thân thiện như chính ngôi nhà của bạn",
+      "icon": "HomeIcon",
+      "bg": "bg-primary-100 dark:bg-primary-900"
+    },
+    {
+      "id": "f_price",
+      "title": "Giá cả hợp lý",
+      "description": "Tận hưởng kỳ nghỉ tuyệt vời với mức giá phù hợp với túi tiền",
+      "icon": "CurrencyDollarIcon",
+      "bg": "bg-primary-100 dark:bg-primary-900"
+    },
+    {
+      "id": "f_safe",
+      "title": "An toàn & tin cậy",
+      "description": "Hệ thống đánh giá minh bạch và chính sách bảo vệ khách hàng toàn diện",
+      "icon": "ShieldCheckIcon",
+      "bg": "bg-primary-100 dark:bg-primary-900"
     }
   ]
 }

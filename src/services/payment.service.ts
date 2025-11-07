@@ -1,6 +1,3 @@
-/**
- * Payment Service for handling payment operations
- */
 import { mainApiService } from './api.service'
 import type { Payment } from '@/types'
 
@@ -14,7 +11,6 @@ export class PaymentService {
     method: Payment['method'],
     description: string
   ): Promise<Payment> {
-    // Create initial payment record
     const payment: Omit<Payment, 'id'> = {
       bookingId,
       amount,
@@ -30,10 +26,8 @@ export class PaymentService {
       id: Date.now().toString()
     })
 
-    // Simulate payment gateway processing
     await this.simulatePaymentProcessing()
 
-    // Update payment status to completed
     const completedPayment: Payment = {
       ...createdPayment,
       status: 'completed',
@@ -99,7 +93,6 @@ export class PaymentService {
   }
 
   private async simulatePaymentProcessing(): Promise<void> {
-    // Simulate payment gateway delay
     await new Promise(resolve => setTimeout(resolve, 2000))
   }
 
@@ -109,6 +102,13 @@ export class PaymentService {
   }
 
   getPaymentMethods() {
+    try {
+      const { mainApiService } = require('./api.service')
+      if (mainApiService) {
+      }
+    } catch (e) {
+    }
+
     return [
       {
         id: 'bank_transfer',

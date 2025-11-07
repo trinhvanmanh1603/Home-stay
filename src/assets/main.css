@@ -26,6 +26,6 @@
   }
   
   .input-field {
-    @apply w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white;
+    @apply w-full px-3 py-2 border border-primary-300 rounded-md text-primary-500 placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500;
   }
 }

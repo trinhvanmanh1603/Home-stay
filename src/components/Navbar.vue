@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-lg border-b border-gray-200/20 dark:border-gray-700/30 sticky top-0 z-50">
+  <nav :class="navClass">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
         <!-- Logo -->
@@ -28,19 +28,19 @@
         <div class="hidden md:block">
           <div class="ml-10 flex items-center space-x-1">
             <RouterLink to="/" 
-                       class="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 group">
+                       :class="[linkBaseClass, 'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 group']">
               <span class="text-base">🏠</span>
               <span>Trang chủ</span>
             </RouterLink>
             <RouterLink to="/stays" 
-                       class="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 group">
+                       :class="[linkBaseClass, 'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 group']">
               <span class="text-base">🔍</span>
               <span>Khám phá</span>
             </RouterLink>
             <RouterLink 
               v-if="authStore.isAuthenticated && !authStore.isAdmin"
               to="/my-bookings" 
-              class="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 group"
+              :class="[linkBaseClass, 'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 group']"
             >
               <span class="text-base">📋</span>
               <span>Đặt phòng của tôi</span>
@@ -81,7 +81,7 @@
               <div v-if="authStore.isAdmin" class="relative admin-dropdown">
                 <button 
                   @click="adminQuickMenu = !adminQuickMenu"
-                  class="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 group border border-transparent hover:border-primary-200 dark:hover:border-primary-800"
+                  :class="[linkBaseClass, 'flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 group border border-transparent']"
                 >
                   <span class="flex items-center space-x-1">
                     <span class="text-base">⚡</span>
@@ -156,12 +156,12 @@
               </div>
               
               <!-- User info -->
-              <div class="flex items-center space-x-3 bg-gray-50 dark:bg-gray-800 rounded-lg px-4 py-2">
+              <div :class="['flex items-center space-x-3 rounded-lg px-4 py-2', userInfoBgClass]">
                 <div class="w-8 h-8 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
                   {{ authStore.user?.firstName?.charAt(0)?.toUpperCase() }}
                 </div>
                 <div class="hidden lg:block">
-                  <p class="text-sm font-medium text-gray-900 dark:text-white">
+                  <p class="text-sm font-medium bg-gradient-to-r from-primary-600 to-purple-600 dark:from-primary-400 dark:to-purple-400 bg-clip-text text-transparent">
                     {{ authStore.user?.firstName }} {{ authStore.user?.lastName }}
                   </p>
                   <p class="text-xs text-gray-500 dark:text-gray-400">
@@ -373,7 +373,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { RouterLink } from 'vue-router'
 import { useThemeStore } from '@/store/theme'
 import { useAuthStore } from '@/store/auth'
@@ -381,6 +382,33 @@ import ConfirmationModal from '@/components/ConfirmationModal.vue'
 import ActionButton from '@/components/common/ActionButton.vue'
 import MobileNavLink from '@/components/common/MobileNavLink.vue'
 import { ChevronDownIcon } from '@heroicons/vue/24/outline'
+
+const props = withDefaults(defineProps<{ transparent?: boolean }>(), { transparent: false })
+
+const route = useRoute()
+
+// If parent explicitly passes transparent prop, use it. Otherwise make navbar transparent on home route.
+const navTransparent = computed(() => {
+  if (props.transparent) return true
+  return route.path === '/' || route.name === 'Home'
+})
+
+const navClass = computed(() => {
+  if (navTransparent.value) {
+    return 'absolute inset-x-0 top-0 z-50 bg-transparent'
+  }
+  return 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-lg border-b border-gray-200/20 dark:border-gray-700/30 sticky top-0 z-50'
+})
+
+const linkBaseClass = computed(() => {
+  return navTransparent.value
+    ? 'flex items-center space-x-2 text-white hover:text-primary-200'
+    : 'flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'
+})
+
+const userInfoBgClass = computed(() => {
+  return navTransparent.value ? 'bg-white/10 text-white' : 'bg-gray-50 dark:bg-gray-800'
+})
 
 const themeStore = useThemeStore()
 const authStore = useAuthStore()
